@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck } from "lucide-react";
+import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee } from "lucide-react";
 import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { categories, products } from "@/data/products";
@@ -9,9 +9,43 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
+const quickLinks = [
+  { icon: Gift, label: "Membership Deals", to: "/shop", tone: "brown" },
+  { icon: CloudRain, label: "Monsoon Special", to: "/shop", tone: "green" },
+  { icon: PackageOpen, label: "New Launches", to: "/shop", tone: "green" },
+  { icon: Boxes, label: "All Products", to: "/shop", tone: "green" },
+  { icon: BadgeIndianRupee, label: "Under ₹999", to: "/shop", tone: "brown" },
+] as const;
+
 function HomePage() {
   return (
     <SiteLayout>
+      {/* Quick category stickers */}
+      <section className="border-b border-border bg-secondary/30">
+        <div className="container-x py-8">
+          <ul className="flex flex-wrap items-start justify-center gap-6 sm:gap-10">
+            {quickLinks.map(({ icon: Icon, label, to, tone }) => (
+              <li key={label} className="flex w-24 flex-col items-center gap-3 text-center">
+                <Link
+                  to={to}
+                  aria-label={label}
+                  className={`flex h-20 w-20 items-center justify-center rounded-full shadow-soft transition-transform hover:scale-105 ${
+                    tone === "brown"
+                      ? "bg-[hsl(25_55%_20%)] text-[hsl(45_70%_75%)]"
+                      : "bg-primary text-[hsl(45_70%_75%)]"
+                  }`}
+                >
+                  <Icon className="h-9 w-9" strokeWidth={1.6} />
+                </Link>
+                <span className="text-xs font-semibold tracking-wide text-primary">
+                  {label}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
