@@ -63,7 +63,7 @@ function CategoryPage() {
         </div>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((p) => (
+          {products.map((p: typeof products[number]) => (
             <ProductCard key={p.id} product={p} />
           ))}
         </div>

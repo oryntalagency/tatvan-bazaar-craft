@@ -89,7 +89,7 @@ function ProductPage() {
           <div className="mt-8">
             <p className="text-xs uppercase tracking-widest text-muted-foreground">Size</p>
             <div className="mt-3 flex flex-wrap gap-2">
-              {product.weightOptions.map((w) => (
+              {product.weightOptions.map((w: string) => (
                 <button
                   key={w}
                   onClick={() => setWeight(w)}
@@ -141,7 +141,7 @@ function ProductPage() {
           </div>
 
           <ul className="mt-8 grid gap-2">
-            {product.benefits.map((b) => (
+            {product.benefits.map((b: string) => (
               <li key={b} className="flex items-center gap-2 text-sm text-foreground/80">
                 <Leaf className="h-4 w-4 text-primary" /> {b}
               </li>
