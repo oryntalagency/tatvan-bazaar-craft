@@ -232,60 +232,72 @@ function HomePage() {
 
       {/* Press + Reviews */}
       <section className="bg-[hsl(30_50%_96%)]">
-        <div className="container-x py-20">
-          <div className="rounded-2xl bg-secondary/70 px-6 py-8">
-            <p className="mb-6 text-center text-xs uppercase tracking-[0.3em] text-muted-foreground">
-              As featured in
-            </p>
+        <div className="container-x py-16 sm:py-20">
+          {/* Press bar */}
+          <div className="rounded-2xl bg-[hsl(30_15%_92%)] px-6 py-6 sm:py-8">
             <div className="grid grid-cols-2 items-center justify-items-center gap-6 sm:grid-cols-3 md:grid-cols-5">
-              {["GQ", "Hindustan Times", "Krishi Jagran", "myGov", "The Hindu"].map((name) => (
-                <div key={name} className="font-display text-xl font-semibold tracking-tight text-primary/80 sm:text-2xl">
-                  {name}
+              {[
+                { name: "GQ", cls: "font-display text-3xl font-black tracking-tighter" },
+                { name: "Hindustan Times", cls: "font-display text-lg font-semibold italic" },
+                { name: "KRISHI JAGRAN", cls: "font-display text-base font-black tracking-tight" },
+                { name: "myGov", cls: "font-display text-xl font-black lowercase tracking-tight" },
+                { name: "THE HINDU", cls: "font-display text-lg font-semibold tracking-widest" },
+              ].map((p) => (
+                <div key={p.name} className={`text-foreground/80 ${p.cls}`}>
+                  {p.name}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="mt-14 text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Kind words</p>
-            <h2 className="mt-2 font-display text-4xl text-primary">What our community says</h2>
-          </div>
-
-          <div className="mt-10 grid gap-8 md:grid-cols-3">
+          {/* Reviews */}
+          <div className="mt-14 grid gap-10 md:grid-cols-3">
             {[
               {
-                name: "Aarav Sharma",
-                role: "Home Chef, Mumbai",
+                name: "NITHIN KAMATH",
+                role: "Founder, Rainmatter",
+                initials: "NK",
                 quote:
-                  "Tatvan's raw honey is the real thing — floral, alive, and nothing like the supermarket stuff. My mornings feel different.",
+                  "At Tatvan, we care deeply about what we eat. Their farms stood out — clean food, deep purpose, and a clear mission to support farmer livelihoods. We're customers first.",
               },
               {
-                name: "Priya Nair",
-                role: "Yoga Teacher, Pune",
+                name: "ANAND S AHUJA",
+                role: "Founder, Bhaane",
+                initials: "AA",
                 quote:
-                  "The bilona ghee smells exactly like my grandmother's kitchen. You can taste the care in every spoon.",
+                  "Pure love, pure taste, pure intention. Every product from Tatvan feels authentic and full of heart — from how it's grown to how it tastes. It inspires mindful eating.",
               },
               {
-                name: "Rohan Verma",
-                role: "Baker, Delhi",
+                name: "MIRA KAPOOR",
+                role: "India",
+                initials: "MK",
                 quote:
-                  "Stone-ground atta made my rotis soft and my breads deeper in flavour. I won't switch back.",
+                  "One of the few brands that makes ghee the traditional way — from dahi, not malai. That alone won me over. Delicious, wholesome, and always a repeat buy.",
               },
             ].map((r) => (
-              <figure key={r.name} className="relative rounded-2xl bg-[hsl(28_85%_78%)] p-6 pt-10 shadow-card">
-                <Quote className="absolute -top-4 left-6 h-8 w-8 rounded-full bg-primary p-1.5 text-primary-foreground" />
-                <div className="mb-3 flex gap-0.5 text-gold">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" strokeWidth={0} />
-                  ))}
+              <figure key={r.name} className="relative">
+                {/* Top row: stars + name (left) · avatar (right) */}
+                <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-1">
+                  <div className="min-w-0">
+                    <div className="mb-2 flex gap-0.5 text-gold">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-current" strokeWidth={0} />
+                      ))}
+                    </div>
+                    <p className="truncate text-sm font-bold tracking-wide text-primary">{r.name}</p>
+                    <p className="truncate text-xs text-muted-foreground">{r.role}</p>
+                  </div>
+                  <div
+                    aria-hidden
+                    className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-secondary text-primary shadow-soft ring-4 ring-[hsl(30_50%_96%)]"
+                  >
+                    <span className="font-display text-lg font-bold">{r.initials}</span>
+                  </div>
                 </div>
-                <blockquote className="text-sm leading-relaxed text-primary-foreground">
-                  "{r.quote}"
+                {/* Quote card */}
+                <blockquote className="-mt-6 rounded-2xl bg-[hsl(28_85%_72%)] p-6 pt-10 text-primary-foreground shadow-card">
+                  <p className="text-sm font-semibold leading-relaxed">{r.quote}</p>
                 </blockquote>
-                <figcaption className="mt-5 border-t border-primary-foreground/20 pt-3">
-                  <p className="font-semibold text-primary">{r.name}</p>
-                  <p className="text-xs text-primary/80">{r.role}</p>
-                </figcaption>
               </figure>
             ))}
           </div>
