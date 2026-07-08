@@ -8,10 +8,10 @@ import { Button } from "@/components/ui/button";
 
 const nav = [
   { to: "/", label: "Home" },
-  { to: "/shop", label: "Shop" },
   { to: "/about", label: "Our Story" },
   { to: "/contact", label: "Contact" },
 ] as const;
+
 
 const categoryIcons: Record<string, typeof Droplet> = {
   honey: Droplet,
