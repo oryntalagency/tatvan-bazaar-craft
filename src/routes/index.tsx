@@ -229,6 +229,69 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Press + Reviews */}
+      <section className="bg-[hsl(30_50%_96%)]">
+        <div className="container-x py-20">
+          <div className="rounded-2xl bg-secondary/70 px-6 py-8">
+            <p className="mb-6 text-center text-xs uppercase tracking-[0.3em] text-muted-foreground">
+              As featured in
+            </p>
+            <div className="grid grid-cols-2 items-center justify-items-center gap-6 sm:grid-cols-3 md:grid-cols-5">
+              {["GQ", "Hindustan Times", "Krishi Jagran", "myGov", "The Hindu"].map((name) => (
+                <div key={name} className="font-display text-xl font-semibold tracking-tight text-primary/80 sm:text-2xl">
+                  {name}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-14 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Kind words</p>
+            <h2 className="mt-2 font-display text-4xl text-primary">What our community says</h2>
+          </div>
+
+          <div className="mt-10 grid gap-8 md:grid-cols-3">
+            {[
+              {
+                name: "Aarav Sharma",
+                role: "Home Chef, Mumbai",
+                quote:
+                  "Tatvan's raw honey is the real thing — floral, alive, and nothing like the supermarket stuff. My mornings feel different.",
+              },
+              {
+                name: "Priya Nair",
+                role: "Yoga Teacher, Pune",
+                quote:
+                  "The bilona ghee smells exactly like my grandmother's kitchen. You can taste the care in every spoon.",
+              },
+              {
+                name: "Rohan Verma",
+                role: "Baker, Delhi",
+                quote:
+                  "Stone-ground atta made my rotis soft and my breads deeper in flavour. I won't switch back.",
+              },
+            ].map((r) => (
+              <figure key={r.name} className="relative rounded-2xl bg-[hsl(28_85%_78%)] p-6 pt-10 shadow-card">
+                <Quote className="absolute -top-4 left-6 h-8 w-8 rounded-full bg-primary p-1.5 text-primary-foreground" />
+                <div className="mb-3 flex gap-0.5 text-gold">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" strokeWidth={0} />
+                  ))}
+                </div>
+                <blockquote className="text-sm leading-relaxed text-primary-foreground">
+                  "{r.quote}"
+                </blockquote>
+                <figcaption className="mt-5 border-t border-primary-foreground/20 pt-3">
+                  <p className="font-semibold text-primary">{r.name}</p>
+                  <p className="text-xs text-primary/80">{r.role}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </SiteLayout>
   );
 }
