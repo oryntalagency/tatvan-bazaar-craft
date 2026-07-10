@@ -83,11 +83,19 @@ function TraceabilityPage() {
       </section>
 
       <section className="container-x py-16">
-        <h2 className="font-display text-4xl text-primary">Lab reports, on every batch</h2>
-        <p className="mt-3 max-w-2xl text-foreground/80">
-          We test for pesticide residues, adulteration, microbial safety and
-          nutritional markers. Reports are published for every batch we ship.
-        </p>
+        <div className="grid gap-8 md:grid-cols-[1fr_1.2fr] md:items-center">
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={labImg} alt="Independent lab technician testing a honey sample" loading="lazy" width={1024} height={1024} className="h-72 w-full object-cover md:h-96" />
+          </figure>
+          <div>
+            <h2 className="font-display text-4xl text-primary">Lab reports, on every batch</h2>
+            <p className="mt-3 max-w-2xl text-foreground/80">
+              We test for pesticide residues, adulteration, microbial safety and
+              nutritional markers. Reports are published for every batch we ship.
+            </p>
+          </div>
+        </div>
+
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {[
             { b: "Batch H-2408", p: "Raw Forest Honey", d: "Aug 2024" },
