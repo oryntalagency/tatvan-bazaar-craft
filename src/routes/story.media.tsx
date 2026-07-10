@@ -40,18 +40,30 @@ function MediaPage() {
       </section>
 
       <section className="container-x py-16">
-        <h2 className="font-display text-4xl text-primary">As featured in</h2>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {press.map((p) => (
-            <span
-              key={p}
-              className="rounded-full border border-border bg-secondary/40 px-5 py-2 font-display text-sm text-primary"
-            >
-              {p}
-            </span>
-          ))}
+        <div className="grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-center">
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={pressImg} alt="Journalists interviewing a Tatvan partner farmer in the fields" loading="lazy" width={1024} height={1024} className="h-72 w-full object-cover md:h-96" />
+            <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+              <span className="font-semibold text-primary">On the ground</span> — reporters visit our farms, not our office.
+            </figcaption>
+          </figure>
+          <div>
+            <h2 className="font-display text-4xl text-primary">As featured in</h2>
+            <p className="mt-3 text-foreground/80">A small brand, quietly noticed by the people who cover food, farming and the way India eats.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {press.map((p) => (
+                <span
+                  key={p}
+                  className="rounded-full border border-border bg-secondary/40 px-5 py-2 font-display text-sm text-primary"
+                >
+                  {p}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
+
 
       <section className="bg-secondary/40">
         <div className="container-x py-16">
