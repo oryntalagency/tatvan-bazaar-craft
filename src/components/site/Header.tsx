@@ -195,6 +195,19 @@ export function Header() {
               </Link>
             ))}
             <div className="mt-2 border-t border-border pt-3">
+              <p className="pb-2 text-xs uppercase tracking-wider text-muted-foreground">Our Story</p>
+              <ul className="divide-y divide-border rounded-xl border border-border">
+                {storyLinks.map((s) => (
+                  <li key={s.to}>
+                    <Link to={s.to} onClick={() => setOpen(false)} className="flex flex-col p-3">
+                      <span className="text-sm font-semibold text-primary">{s.label}</span>
+                      <span className="text-[11px] text-muted-foreground">{s.tagline}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-2 border-t border-border pt-3">
               <p className="pb-2 text-xs uppercase tracking-wider text-muted-foreground">Shop by Category</p>
               <ul className="divide-y divide-border rounded-xl border border-border">
                 {categories.map((c) => {
