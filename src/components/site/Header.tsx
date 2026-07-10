@@ -8,8 +8,14 @@ import { Button } from "@/components/ui/button";
 
 const nav = [
   { to: "/", label: "Home" },
-  { to: "/about", label: "Our Story" },
   { to: "/contact", label: "Contact" },
+] as const;
+
+const storyLinks = [
+  { to: "/about", label: "Our Story", tagline: "Where Tatvan began" },
+  { to: "/story/philosophy", label: "Our Philosophy", tagline: "What we believe in" },
+  { to: "/story/traceability", label: "Traceability", tagline: "Farm to jar" },
+  { to: "/story/media", label: "Media Recognition", tagline: "Press & awards" },
 ] as const;
 
 
@@ -23,6 +29,7 @@ export function Header() {
   const { cartCount, wishlistCount } = useShop();
   const [open, setOpen] = useState(false);
   const [catOpen, setCatOpen] = useState(false);
+  const [storyOpen, setStoryOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
   return (
@@ -53,6 +60,42 @@ export function Header() {
               {n.label}
             </Link>
           ))}
+          <div
+            className="relative"
+            onMouseEnter={() => setStoryOpen(true)}
+            onMouseLeave={() => setStoryOpen(false)}
+          >
+            <button
+              className="inline-flex items-center gap-1 text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+              onClick={() => setStoryOpen((v) => !v)}
+              aria-expanded={storyOpen}
+            >
+              Our Story
+              <ChevronDown className={`h-4 w-4 transition-transform ${storyOpen ? "rotate-180" : ""}`} />
+            </button>
+            {storyOpen && (
+              <>
+                <div className="absolute left-1/2 top-full h-3 w-full -translate-x-1/2" />
+                <div className="absolute left-1/2 top-full z-50 mt-3 w-64 -translate-x-1/2 rounded-2xl border border-border bg-popover p-2 shadow-soft">
+                  <div className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-border bg-popover" />
+                  <ul className="relative flex flex-col">
+                    {storyLinks.map((s) => (
+                      <li key={s.to}>
+                        <Link
+                          to={s.to}
+                          onClick={() => setStoryOpen(false)}
+                          className="flex flex-col rounded-lg px-3 py-2 transition-colors hover:bg-secondary/50"
+                        >
+                          <span className="text-sm font-semibold text-primary">{s.label}</span>
+                          <span className="text-[11px] text-muted-foreground">{s.tagline}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
+            )}
+          </div>
           <div
             className="relative"
             onMouseEnter={() => setCatOpen(true)}
@@ -151,6 +194,19 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
+            <div className="mt-2 border-t border-border pt-3">
+              <p className="pb-2 text-xs uppercase tracking-wider text-muted-foreground">Our Story</p>
+              <ul className="divide-y divide-border rounded-xl border border-border">
+                {storyLinks.map((s) => (
+                  <li key={s.to}>
+                    <Link to={s.to} onClick={() => setOpen(false)} className="flex flex-col p-3">
+                      <span className="text-sm font-semibold text-primary">{s.label}</span>
+                      <span className="text-[11px] text-muted-foreground">{s.tagline}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div className="mt-2 border-t border-border pt-3">
               <p className="pb-2 text-xs uppercase tracking-wider text-muted-foreground">Shop by Category</p>
               <ul className="divide-y divide-border rounded-xl border border-border">
