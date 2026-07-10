@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MapPin, QrCode, FlaskConical, ShieldCheck, FileCheck } from "lucide-react";
 import { SiteLayout } from "@/components/site/Layout";
 import heroImg from "@/assets/hero-farm.jpg";
+import wheatHandsImg from "@/assets/story-wheat-hands.jpg";
+import womanFarmerImg from "@/assets/story-woman-farmer.jpg";
+import labImg from "@/assets/story-lab-testing.jpg";
+
 
 export const Route = createFileRoute("/story/traceability")({
   head: () => ({
@@ -50,11 +54,18 @@ function TraceabilityPage() {
             </div>
           ))}
         </div>
+        <figure className="mt-10 overflow-hidden rounded-2xl shadow-card">
+          <img src={wheatHandsImg} alt="Farmer hands holding freshly harvested wheat grains" loading="lazy" width={1024} height={1024} className="h-64 w-full object-cover md:h-96" />
+          <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+            <span className="font-semibold text-primary">Grain by grain</span> — every wheat lot is hand-checked at the source before it leaves the farm.
+          </figcaption>
+        </figure>
       </section>
+
 
       <section className="bg-secondary/40">
         <div className="container-x py-16 md:grid md:grid-cols-2 md:gap-12">
-          <img src={heroImg} alt="Farm" className="h-full w-full rounded-2xl object-cover shadow-card" />
+          <img src={womanFarmerImg} alt="Woman farmer holding a basket of freshly picked greens" loading="lazy" width={1024} height={1024} className="h-full w-full rounded-2xl object-cover shadow-card" />
           <div className="mt-8 md:mt-0">
             <h2 className="font-display text-4xl text-primary">Know your farmer</h2>
             <p className="mt-4 text-foreground/80">
@@ -72,11 +83,19 @@ function TraceabilityPage() {
       </section>
 
       <section className="container-x py-16">
-        <h2 className="font-display text-4xl text-primary">Lab reports, on every batch</h2>
-        <p className="mt-3 max-w-2xl text-foreground/80">
-          We test for pesticide residues, adulteration, microbial safety and
-          nutritional markers. Reports are published for every batch we ship.
-        </p>
+        <div className="grid gap-8 md:grid-cols-[1fr_1.2fr] md:items-center">
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={labImg} alt="Independent lab technician testing a honey sample" loading="lazy" width={1024} height={1024} className="h-72 w-full object-cover md:h-96" />
+          </figure>
+          <div>
+            <h2 className="font-display text-4xl text-primary">Lab reports, on every batch</h2>
+            <p className="mt-3 max-w-2xl text-foreground/80">
+              We test for pesticide residues, adulteration, microbial safety and
+              nutritional markers. Reports are published for every batch we ship.
+            </p>
+          </div>
+        </div>
+
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {[
             { b: "Batch H-2408", p: "Raw Forest Honey", d: "Aug 2024" },

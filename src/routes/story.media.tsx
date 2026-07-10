@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Newspaper, Award, Quote, Tv, Mic } from "lucide-react";
 import { SiteLayout } from "@/components/site/Layout";
 import heroImg from "@/assets/hero-farm.jpg";
+import pressImg from "@/assets/story-press-interview.jpg";
+import beekeeperImg from "@/assets/story-beekeeper.jpg";
+import stoneMillImg from "@/assets/story-stone-mill.jpg";
+
 
 export const Route = createFileRoute("/story/media")({
   head: () => ({
@@ -36,18 +40,30 @@ function MediaPage() {
       </section>
 
       <section className="container-x py-16">
-        <h2 className="font-display text-4xl text-primary">As featured in</h2>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {press.map((p) => (
-            <span
-              key={p}
-              className="rounded-full border border-border bg-secondary/40 px-5 py-2 font-display text-sm text-primary"
-            >
-              {p}
-            </span>
-          ))}
+        <div className="grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-center">
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={pressImg} alt="Journalists interviewing a Tatvan partner farmer in the fields" loading="lazy" width={1024} height={1024} className="h-72 w-full object-cover md:h-96" />
+            <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+              <span className="font-semibold text-primary">On the ground</span> — reporters visit our farms, not our office.
+            </figcaption>
+          </figure>
+          <div>
+            <h2 className="font-display text-4xl text-primary">As featured in</h2>
+            <p className="mt-3 text-foreground/80">A small brand, quietly noticed by the people who cover food, farming and the way India eats.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {press.map((p) => (
+                <span
+                  key={p}
+                  className="rounded-full border border-border bg-secondary/40 px-5 py-2 font-display text-sm text-primary"
+                >
+                  {p}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
+
 
       <section className="bg-secondary/40">
         <div className="container-x py-16">
@@ -70,7 +86,25 @@ function MediaPage() {
         </div>
       </section>
 
+      <section className="container-x py-12">
+        <div className="grid gap-4 md:grid-cols-2">
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={beekeeperImg} alt="Beekeeper tending wild honeycombs in a forest" loading="lazy" width={1024} height={1024} className="h-64 w-full object-cover md:h-80" />
+            <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+              <span className="font-semibold text-primary">Wild forest honey</span> — harvested by hand from tribal collectives.
+            </figcaption>
+          </figure>
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={stoneMillImg} alt="Traditional stone chakki grinding wheat into flour" loading="lazy" width={1024} height={1024} className="h-64 w-full object-cover md:h-80" />
+            <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+              <span className="font-semibold text-primary">Stone-ground atta</span> — milled slowly to keep the germ and the nutrients alive.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       <section className="container-x py-16">
+
         <h2 className="font-display text-4xl text-primary">Awards & recognition</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {[

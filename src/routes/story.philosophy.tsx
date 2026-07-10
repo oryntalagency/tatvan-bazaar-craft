@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Leaf, Sprout, HeartHandshake, Sun, Droplets } from "lucide-react";
 import { SiteLayout } from "@/components/site/Layout";
 import heroImg from "@/assets/hero-farm.jpg";
+import familyImg from "@/assets/story-farmer-family.jpg";
+import bilonaImg from "@/assets/story-bilona-ghee.jpg";
+import aerialImg from "@/assets/story-farm-aerial.jpg";
+
 
 export const Route = createFileRoute("/story/philosophy")({
   head: () => ({
@@ -47,8 +51,9 @@ function PhilosophyPage() {
           </p>
         </div>
         <div className="mt-8 md:mt-0">
-          <img src={heroImg} alt="Fields" className="h-full w-full rounded-2xl object-cover shadow-card" />
+          <img src={familyImg} alt="Partner farmer family in their fields" loading="lazy" width={1024} height={1024} className="h-full w-full rounded-2xl object-cover shadow-card" />
         </div>
+
       </section>
 
       <section className="bg-secondary/40">
@@ -71,6 +76,26 @@ function PhilosophyPage() {
           </div>
         </div>
       </section>
+
+      <section className="container-x py-12">
+        <div className="grid gap-4 md:grid-cols-2">
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={bilonaImg} alt="Traditional bilona ghee being churned in a clay pot" loading="lazy" width={1024} height={1024} className="h-72 w-full object-cover md:h-96" />
+            <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+              <span className="font-semibold text-primary">Bilona churning</span> — cultured curd, hand-churned, slow-cooked to golden ghee.
+            </figcaption>
+          </figure>
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={aerialImg} alt="Terraced organic farm fields at golden hour" loading="lazy" width={1024} height={1024} className="h-72 w-full object-cover md:h-96" />
+            <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+              <span className="font-semibold text-primary">Chemical-free fields</span> — terraces worked the way they have been for generations.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+
+
 
       <section className="container-x py-16">
         <h2 className="font-display text-4xl text-primary">The way we work</h2>
