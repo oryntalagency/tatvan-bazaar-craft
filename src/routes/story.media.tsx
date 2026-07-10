@@ -86,7 +86,25 @@ function MediaPage() {
         </div>
       </section>
 
+      <section className="container-x py-12">
+        <div className="grid gap-4 md:grid-cols-2">
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={beekeeperImg} alt="Beekeeper tending wild honeycombs in a forest" loading="lazy" width={1024} height={1024} className="h-64 w-full object-cover md:h-80" />
+            <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+              <span className="font-semibold text-primary">Wild forest honey</span> — harvested by hand from tribal collectives.
+            </figcaption>
+          </figure>
+          <figure className="overflow-hidden rounded-2xl shadow-card">
+            <img src={stoneMillImg} alt="Traditional stone chakki grinding wheat into flour" loading="lazy" width={1024} height={1024} className="h-64 w-full object-cover md:h-80" />
+            <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+              <span className="font-semibold text-primary">Stone-ground atta</span> — milled slowly to keep the germ and the nutrients alive.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       <section className="container-x py-16">
+
         <h2 className="font-display text-4xl text-primary">Awards & recognition</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {[
