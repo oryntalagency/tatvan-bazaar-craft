@@ -65,7 +65,7 @@ function TraceabilityPage() {
 
       <section className="bg-secondary/40">
         <div className="container-x py-16 md:grid md:grid-cols-2 md:gap-12">
-          <img src={heroImg} alt="Farm" className="h-full w-full rounded-2xl object-cover shadow-card" />
+          <img src={womanFarmerImg} alt="Woman farmer holding a basket of freshly picked greens" loading="lazy" width={1024} height={1024} className="h-full w-full rounded-2xl object-cover shadow-card" />
           <div className="mt-8 md:mt-0">
             <h2 className="font-display text-4xl text-primary">Know your farmer</h2>
             <p className="mt-4 text-foreground/80">
