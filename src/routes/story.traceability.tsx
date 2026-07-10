@@ -54,7 +54,14 @@ function TraceabilityPage() {
             </div>
           ))}
         </div>
+        <figure className="mt-10 overflow-hidden rounded-2xl shadow-card">
+          <img src={wheatHandsImg} alt="Farmer hands holding freshly harvested wheat grains" loading="lazy" width={1024} height={1024} className="h-64 w-full object-cover md:h-96" />
+          <figcaption className="bg-card px-5 py-3 text-sm text-muted-foreground">
+            <span className="font-semibold text-primary">Grain by grain</span> — every wheat lot is hand-checked at the source before it leaves the farm.
+          </figcaption>
+        </figure>
       </section>
+
 
       <section className="bg-secondary/40">
         <div className="container-x py-16 md:grid md:grid-cols-2 md:gap-12">
