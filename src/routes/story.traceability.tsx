@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MapPin, QrCode, FlaskConical, ShieldCheck, FileCheck } from "lucide-react";
 import { SiteLayout } from "@/components/site/Layout";
 import heroImg from "@/assets/hero-farm.jpg";
+import wheatHandsImg from "@/assets/story-wheat-hands.jpg";
+import womanFarmerImg from "@/assets/story-woman-farmer.jpg";
+import labImg from "@/assets/story-lab-testing.jpg";
+
 
 export const Route = createFileRoute("/story/traceability")({
   head: () => ({
