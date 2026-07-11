@@ -27,6 +27,7 @@ const [form, setForm] = useState({
   postalCode: "",
 });
 const handlePayment = async () => {
+  const API = import.meta.env.VITE_API_URL;
   if (
   !form.customerName ||
   !form.email ||
@@ -42,7 +43,7 @@ const handlePayment = async () => {
   try {
     setLoading(true);
 
-   const response = await fetch("/api/payment/create-order", {
+   const response = await fetch(`${API}/payment/create-order`,{
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -78,7 +79,7 @@ await openRazorpayCheckout({
 
   async onSuccess(response) {
     try {
-  await fetch("/api/payment/verify", {
+  await fetch(`${API}/payment/verify`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
