@@ -10,6 +10,9 @@ import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { categories, products } from "@/data/products";
 import heroImg from "@/assets/hero-farm.jpg";
+import promoMonsoonImg from "@/assets/promo-monsoon-lifestyle.jpg";
+import promoPriceDropImg from "@/assets/promo-price-drop.jpg";
+import promoDiscountsImg from "@/assets/promo-discounts.jpg";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -49,6 +52,136 @@ function HomePage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* Promo grid */}
+      <section className="bg-secondary/30">
+        <div className="container-x pb-10 pt-2">
+          <div className="grid gap-4 md:grid-cols-3 md:grid-rows-2 md:h-[460px]">
+            {/* Left: monsoon lifestyle */}
+            <Link
+              to="/shop"
+              className="group relative overflow-hidden rounded-2xl shadow-card md:row-span-2"
+            >
+              <img
+                src={promoMonsoonImg}
+                alt="Monsoon immunity essentials"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+              <div className="absolute left-5 top-5 flex flex-col gap-2">
+                <span className="w-fit rounded-full bg-[hsl(45_90%_65%)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[hsl(25_55%_20%)]">
+                  Immunity support
+                </span>
+                <span className="w-fit rounded-full bg-[hsl(45_90%_65%)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[hsl(25_55%_20%)]">
+                  Rich in Vitamin C
+                </span>
+              </div>
+              <div className="absolute bottom-5 left-5 right-5 text-primary-foreground">
+                <p className="text-[11px] uppercase tracking-[0.25em] opacity-90">Monsoon edit</p>
+                <h3 className="mt-1 font-display text-2xl leading-tight">
+                  Stay well, the natural way.
+                </h3>
+              </div>
+            </Link>
+
+            {/* Center: dark collective panel */}
+            <Link
+              to="/shop"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[hsl(150_40%_12%)] p-6 text-primary-foreground shadow-card md:row-span-2"
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-[0.15]"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle at 20% 10%, hsl(45 90% 75%) 0 2px, transparent 3px), radial-gradient(circle at 80% 40%, hsl(45 90% 75%) 0 2px, transparent 3px), radial-gradient(circle at 30% 80%, hsl(45 90% 75%) 0 2px, transparent 3px)",
+                  backgroundSize: "160px 160px",
+                }}
+              />
+              <div className="relative flex items-center gap-3">
+                <span className="font-display text-lg tracking-wide text-[hsl(45_70%_75%)]">
+                  TATVAN
+                </span>
+                <span className="rounded-md border border-[hsl(45_90%_65%)] px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-[hsl(45_90%_65%)]">
+                  Collective
+                </span>
+              </div>
+              <div className="relative">
+                <h3 className="font-display text-3xl leading-[1.1] md:text-4xl">
+                  Looks like you're Monsoon's favourite!
+                </h3>
+              </div>
+              <div className="relative -mx-6 -mb-6 bg-[hsl(150_45%_22%)] px-6 py-4">
+                <p className="text-sm md:text-base">
+                  Exclusive{" "}
+                  <span className="font-bold text-[hsl(45_90%_65%)] underline underline-offset-4">
+                    18% OFF FOR MEMBERS
+                  </span>
+                </p>
+                <p className="mt-1 text-xs opacity-90">on our Monsoon Immunity range</p>
+              </div>
+            </Link>
+
+            {/* Right top: price drop */}
+            <Link
+              to="/shop"
+              className="group relative overflow-hidden rounded-2xl bg-[hsl(40_50%_92%)] shadow-card"
+            >
+              <img
+                src={promoPriceDropImg}
+                alt="Permanent price drop"
+                className="absolute inset-0 h-full w-full object-cover opacity-90"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[hsl(40_50%_92%)] via-[hsl(40_50%_92%)]/70 to-transparent" />
+              <div className="relative flex h-full flex-col justify-between p-5">
+                <div>
+                  <p className="font-display text-lg leading-tight text-primary md:text-xl">
+                    We're permanently<br />reducing prices
+                  </p>
+                  <p className="mt-1 text-xs font-semibold text-[hsl(15_75%_50%)]">
+                    on our five bestsellers
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-md bg-[hsl(15_75%_50%)] px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">
+                    Price drop
+                  </span>
+                  <span className="text-[11px] font-semibold text-primary underline underline-offset-4">
+                    Buy at new prices →
+                  </span>
+                </div>
+              </div>
+            </Link>
+
+            {/* Right bottom: discounts */}
+            <Link
+              to="/shop"
+              className="group relative overflow-hidden rounded-2xl bg-[hsl(40_50%_92%)] shadow-card"
+            >
+              <img
+                src={promoDiscountsImg}
+                alt="Loyalty discounts"
+                className="absolute inset-0 h-full w-full object-cover opacity-90"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-[hsl(40_50%_92%)] via-[hsl(40_50%_92%)]/70 to-transparent" />
+              <div className="relative flex h-full flex-col items-end justify-center p-5 text-right">
+                <p className="font-display text-xl font-bold uppercase text-[hsl(15_75%_50%)]">
+                  Love discounts?
+                </p>
+                <p className="mt-1 max-w-[60%] text-[11px] font-semibold uppercase tracking-wide text-primary">
+                  Get a permanent 12% off &amp; many more surprises
+                </p>
+                <span className="mt-2 text-[11px] font-semibold text-primary underline underline-offset-4">
+                  Join membership →
+                </span>
+              </div>
+            </Link>
+          </div>
         </div>
       </section>
 
