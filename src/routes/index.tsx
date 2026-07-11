@@ -11,8 +11,7 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { categories, products } from "@/data/products";
 import heroImg from "@/assets/hero-farm.jpg";
 import promoMonsoonImg from "@/assets/promo-monsoon-lifestyle.jpg";
-import promoPriceDropImg from "@/assets/promo-price-drop.jpg";
-import promoDiscountsImg from "@/assets/promo-discounts.jpg";
+import promoRightImg from "@/assets/promo-right-combined.jpg";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
