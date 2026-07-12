@@ -28,6 +28,7 @@ const quickLinks = [
 ] as const;
 
 function HomePage() {
+  const { addToCart } = useShop();
   return (
     <SiteLayout>
       {/* Quick category stickers */}
