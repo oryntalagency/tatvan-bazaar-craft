@@ -1,6 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+
+import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star } from "lucide-react";
+import { useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { getToken } from "@/lib/api";
+
 import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
+
 
 const categoryIcons: Record<string, typeof Droplet> = {
   honey: Droplet,
@@ -28,7 +35,20 @@ const quickLinks = [
 ] as const;
 
 function HomePage() {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!getToken()) {
+      navigate({
+        to: "/login",
+      });
+    }
+  }, [navigate]);
+
+
   const { addToCart } = useShop();
+
   return (
     <SiteLayout>
       {/* Quick category stickers */}
