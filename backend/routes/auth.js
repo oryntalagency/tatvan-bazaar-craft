@@ -2,7 +2,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { OAuth2Client } from "google-auth-library";
-
+import auth from "../middleware/auth.js";
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -160,6 +160,14 @@ router.post("/google", async (req, res) => {
       message: err.message,
     });
   }
+});
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user.id).select("-password");
+
+  res.json({
+    success: true,
+    user,
+  });
 });
 
 export default router;
