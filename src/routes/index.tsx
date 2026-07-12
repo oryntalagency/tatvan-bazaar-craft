@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star } from "lucide-react";
+import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star, ShoppingCart } from "lucide-react";
+import { toast } from "sonner";
 
 const categoryIcons: Record<string, typeof Droplet> = {
   honey: Droplet,
@@ -8,7 +9,8 @@ const categoryIcons: Record<string, typeof Droplet> = {
 };
 import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
-import { categories, products } from "@/data/products";
+import { categories, formatINR, products } from "@/data/products";
+import { useShop } from "@/store/shop-store";
 import heroImg from "@/assets/hero-farm.jpg";
 import promoMonsoonImg from "@/assets/promo-monsoon-lifestyle.jpg";
 import promoRightImg from "@/assets/promo-right-combined.jpg";
@@ -26,6 +28,7 @@ const quickLinks = [
 ] as const;
 
 function HomePage() {
+  const { addToCart } = useShop();
   return (
     <SiteLayout>
       {/* Quick category stickers */}
@@ -297,10 +300,23 @@ function HomePage() {
                 >
                   <img src={v.product.image} alt="" className="h-11 w-11 rounded-md object-cover" />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-xs font-semibold text-primary">{v.product.name}</p>
-                    <p className="text-xs text-muted-foreground">₹ {v.product.price}</p>
+                    <p className="truncate text-xs font-bold text-foreground">{v.product.name}</p>
+                    <p className="text-xs text-muted-foreground">{formatINR(v.product.price)}</p>
                   </div>
                 </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    addToCart(v.product.id, v.product.weightOptions[0], 1);
+                    toast.success(`${v.product.name} added to cart`);
+                  }}
+                  className="flex w-full items-center justify-between border-t border-border bg-primary px-4 py-2.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-primary/90"
+                >
+                  <span>Add to cart</span>
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-primary-foreground/15">
+                    <ShoppingCart className="h-4 w-4" />
+                  </span>
+                </button>
               </div>
             ))}
           </div>
