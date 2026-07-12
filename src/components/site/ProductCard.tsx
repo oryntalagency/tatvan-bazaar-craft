@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, ShoppingBag, Star } from "lucide-react";
+import { Heart, Star, ChevronDown, Minus, Plus } from "lucide-react";
+import { useState } from "react";
 import { formatINR, type Product } from "@/data/products";
 import { useShop } from "@/store/shop-store";
 import { toast } from "sonner";
@@ -8,6 +9,9 @@ import { cn } from "@/lib/utils";
 export function ProductCard({ product }: { product: Product }) {
   const { addToCart, toggleWishlist, isWishlisted } = useShop();
   const wished = isWishlisted(product.id);
+  const [weight, setWeight] = useState(product.weightOptions[0]);
+  const [qty, setQty] = useState(1);
+  const [added, setAdded] = useState(false);
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all hover:-translate-y-0.5 hover:shadow-soft">
@@ -59,7 +63,7 @@ export function ProductCard({ product }: { product: Product }) {
           <span>· {product.reviewCount} reviews</span>
         </div>
 
-        <div className="mt-4 flex items-end justify-between">
+        <div className="mt-3 flex items-center justify-between">
           <div>
             <span className="font-display text-xl text-primary">{formatINR(product.price)}</span>
             {product.compareAt && (
@@ -68,15 +72,74 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             )}
           </div>
-          <button
-            onClick={() => {
-              addToCart(product.id);
-              toast.success(`${product.name} added to cart`);
-            }}
-            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-2 text-xs font-medium text-primary-foreground transition-transform hover:scale-[1.03]"
-          >
-            <ShoppingBag className="h-3.5 w-3.5" /> Add
-          </button>
+        </div>
+
+        <div className="mt-auto pt-4 space-y-2">
+          {product.weightOptions.length > 1 ? (
+            <div className="relative">
+              <select
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                className="w-full appearance-none rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none"
+                aria-label="Select size"
+              >
+                {product.weightOptions.map((w) => (
+                  <option key={w} value={w}>{w}</option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            </div>
+          ) : (
+            <div className="rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground">
+              {product.weightOptions[0]}
+            </div>
+          )}
+
+          {added ? (
+            <div className="flex items-center justify-between rounded-md bg-primary px-2 py-1.5 text-primary-foreground">
+              <button
+                type="button"
+                aria-label="Decrease quantity"
+                onClick={() => {
+                  const next = Math.max(0, qty - 1);
+                  if (next === 0) {
+                    setAdded(false);
+                    setQty(1);
+                  } else {
+                    setQty(next);
+                    addToCart(product.id, weight, -1);
+                  }
+                }}
+                className="rounded p-2 hover:bg-white/10"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+              <span className="text-sm font-semibold tracking-wide">QTY {qty}</span>
+              <button
+                type="button"
+                aria-label="Increase quantity"
+                onClick={() => {
+                  setQty(qty + 1);
+                  addToCart(product.id, weight, 1);
+                }}
+                className="rounded p-2 hover:bg-white/10"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                addToCart(product.id, weight, 1);
+                setAdded(true);
+                toast.success(`${product.name} added to cart`);
+              }}
+              className="w-full rounded-md bg-primary px-4 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition-transform hover:scale-[1.01]"
+            >
+              Add to cart
+            </button>
+          )}
         </div>
       </div>
     </div>
