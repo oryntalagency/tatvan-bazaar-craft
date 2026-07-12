@@ -4,7 +4,9 @@ import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { products } from "@/data/products";
 import { useShop } from "@/store/shop-store";
-
+import { useEffect } from "react";
+import { getToken } from "@/lib/api";
+import { useNavigate } from "@tanstack/react-router";
 export const Route = createFileRoute("/wishlist")({
   head: () => ({
     meta: [
@@ -17,6 +19,15 @@ export const Route = createFileRoute("/wishlist")({
 });
 
 function WishlistPage() {
+  const navigate = useNavigate();
+
+useEffect(() => {
+  if (!getToken()) {
+    navigate({
+      to: "/login",
+    });
+  }
+}, [navigate]);
   const { wishlist } = useShop();
   const items = products.filter((p) => wishlist.includes(p.id));
 
