@@ -300,7 +300,7 @@ function HomePage() {
                 >
                   <img src={v.product.image} alt="" className="h-11 w-11 rounded-md object-cover" />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-xs font-semibold text-primary">{v.product.name}</p>
+                    <p className="truncate text-xs font-bold text-foreground">{v.product.name}</p>
                     <p className="text-xs text-muted-foreground">{formatINR(v.product.price)}</p>
                   </div>
                 </Link>
