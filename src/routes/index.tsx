@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star } from "lucide-react";
-
+import { useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { getToken } from "@/lib/api";
 const categoryIcons: Record<string, typeof Droplet> = {
   honey: Droplet,
   ghee: Milk,
@@ -26,6 +28,16 @@ const quickLinks = [
 ] as const;
 
 function HomePage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!getToken()) {
+      navigate({
+        to: "/login",
+      });
+    }
+  }, [navigate]);
+
   return (
     <SiteLayout>
       {/* Quick category stickers */}
