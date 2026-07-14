@@ -2,8 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 
 import { openRazorpayCheckout } from "@/lib/razorpay";
-import { requireAuth } from "@/lib/auth";
-import { useEffect } from "react";
+
 import { useShop } from "@/store/shop-store";
 
 import { useState } from "react";

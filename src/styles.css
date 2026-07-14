@@ -118,13 +118,3 @@
   padding-inline: 1.25rem;
   max-width: 80rem;
 }
-
-@layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-}
