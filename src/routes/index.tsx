@@ -171,9 +171,6 @@ function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/60 to-primary/20" />
         </div>
         <div className="container-x relative flex min-h-[560px] flex-col justify-center py-24 text-primary-foreground">
-          <p className="mb-4 text-xs uppercase tracking-[0.35em] text-primary-foreground/80">
-            Nature · Purity · Tradition
-          </p>
           <h1 className="max-w-2xl font-display text-5xl leading-[1.05] md:text-6xl lg:text-7xl">
             The taste of the earth, kept whole.
           </h1>
