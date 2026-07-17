@@ -256,14 +256,32 @@ function HomePage() {
 
       {/* Bestsellers */}
       <section className="container-x pb-20">
-        <div className="mb-10">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Bestsellers</p>
-          <h2 className="mt-2 font-display text-4xl text-primary">Loved by our community.</h2>
+        <div className="mb-10 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Bestsellers</p>
+            <h2 className="mt-2 font-display text-4xl text-primary">Loved by our community.</h2>
+          </div>
+          <Link
+            to="/shop"
+            className="hidden rounded-md bg-[hsl(25_55%_20%)] px-4 py-2 text-xs font-semibold text-[hsl(45_70%_75%)] transition-colors hover:bg-[hsl(25_55%_25%)] sm:inline-flex"
+          >
+            Shop More
+          </Link>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:overflow-visible">
           {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+            <div key={p.id} className="w-[85%] shrink-0 snap-center sm:w-auto">
+              <ProductCard product={p} />
+            </div>
           ))}
+        </div>
+        <div className="mt-4 text-center sm:hidden">
+          <Link
+            to="/shop"
+            className="inline-flex rounded-md bg-[hsl(25_55%_20%)] px-4 py-2 text-xs font-semibold text-[hsl(45_70%_75%)] transition-colors hover:bg-[hsl(25_55%_25%)]"
+          >
+            Shop More
+          </Link>
         </div>
       </section>
 
