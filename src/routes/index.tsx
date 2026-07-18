@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star } from "lucide-react";
-import { useEffect } from "react";
+import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
 import { toast } from "sonner";
@@ -14,8 +14,14 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { categories, formatINR, products } from "@/data/products";
 import { useShop } from "@/store/shop-store";
 import heroImg from "@/assets/hero-farm.jpg";
-import promoMonsoonImg from "@/assets/promo-monsoon-lifestyle.jpg";
+import heroSlide1 from "@/assets/hero-slide-1.png.asset.json";
+import heroSlide2 from "@/assets/hero-slide-2.png.asset.json";
 import promoRightImg from "@/assets/promo-right-combined.jpg";
+
+const heroSlides = [
+  { src: heroSlide1.url, alt: "Members-only 18% off on A2 ghee from the hills" },
+  { src: heroSlide2.url, alt: "10% off on orders above ₹3000 — use code TATVAN10" },
+];
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -65,33 +71,9 @@ function HomePage() {
       <section className="bg-secondary/30">
         <div className="container-x pb-10 pt-2">
           <div className="grid gap-4 md:grid-cols-3 md:grid-rows-2 md:h-[460px]">
-            {/* Left: monsoon lifestyle */}
-            <Link
-              to="/shop"
-              className="group relative overflow-hidden rounded-2xl shadow-card md:row-span-2"
-            >
-              <img
-                src={promoMonsoonImg}
-                alt="Monsoon immunity essentials"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-              <div className="absolute left-5 top-5 flex flex-col gap-2">
-                <span className="w-fit rounded-full bg-[hsl(45_90%_65%)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[hsl(25_55%_20%)]">
-                  Immunity support
-                </span>
-                <span className="w-fit rounded-full bg-[hsl(45_90%_65%)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[hsl(25_55%_20%)]">
-                  Rich in Vitamin C
-                </span>
-              </div>
-              <div className="absolute bottom-5 left-5 right-5 text-primary-foreground">
-                <p className="text-[11px] uppercase tracking-[0.25em] opacity-90">Monsoon edit</p>
-                <h3 className="mt-1 font-display text-2xl leading-tight">
-                  Stay well, the natural way.
-                </h3>
-              </div>
-            </Link>
+            {/* Left: hero slider */}
+            <HeroSlider />
+
 
             {/* Center: dark collective panel */}
             <Link
@@ -433,5 +415,69 @@ function HomePage() {
       </section>
 
     </SiteLayout>
+  );
+}
+
+function HeroSlider() {
+  const [index, setIndex] = useState(0);
+  const count = heroSlides.length;
+
+  useEffect(() => {
+    const id = setInterval(() => setIndex((i) => (i + 1) % count), 5000);
+    return () => clearInterval(id);
+  }, [count]);
+
+  const go = (dir: number) => setIndex((i) => (i + dir + count) % count);
+
+  return (
+    <div className="group relative overflow-hidden rounded-2xl shadow-card md:row-span-2">
+      <Link to="/shop" className="block h-full w-full">
+        <div
+          className="flex h-full w-full transition-transform duration-700 ease-out"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {heroSlides.map((s) => (
+            <img
+              key={s.src}
+              src={s.src}
+              alt={s.alt}
+              className="h-full w-full shrink-0 object-cover"
+              loading="lazy"
+            />
+          ))}
+        </div>
+      </Link>
+
+      <button
+        type="button"
+        aria-label="Previous slide"
+        onClick={() => go(-1)}
+        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-1.5 text-primary opacity-0 shadow-soft transition-opacity hover:bg-background group-hover:opacity-100"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      <button
+        type="button"
+        aria-label="Next slide"
+        onClick={() => go(1)}
+        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-1.5 text-primary opacity-0 shadow-soft transition-opacity hover:bg-background group-hover:opacity-100"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+
+      <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+        {heroSlides.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setIndex(i)}
+            className={`h-1.5 rounded-full transition-all ${
+              i === index ? "w-6 bg-primary-foreground" : "w-1.5 bg-primary-foreground/60"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
