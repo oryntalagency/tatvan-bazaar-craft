@@ -71,33 +71,9 @@ function HomePage() {
       <section className="bg-secondary/30">
         <div className="container-x pb-10 pt-2">
           <div className="grid gap-4 md:grid-cols-3 md:grid-rows-2 md:h-[460px]">
-            {/* Left: monsoon lifestyle */}
-            <Link
-              to="/shop"
-              className="group relative overflow-hidden rounded-2xl shadow-card md:row-span-2"
-            >
-              <img
-                src={promoMonsoonImg}
-                alt="Monsoon immunity essentials"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-              <div className="absolute left-5 top-5 flex flex-col gap-2">
-                <span className="w-fit rounded-full bg-[hsl(45_90%_65%)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[hsl(25_55%_20%)]">
-                  Immunity support
-                </span>
-                <span className="w-fit rounded-full bg-[hsl(45_90%_65%)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[hsl(25_55%_20%)]">
-                  Rich in Vitamin C
-                </span>
-              </div>
-              <div className="absolute bottom-5 left-5 right-5 text-primary-foreground">
-                <p className="text-[11px] uppercase tracking-[0.25em] opacity-90">Monsoon edit</p>
-                <h3 className="mt-1 font-display text-2xl leading-tight">
-                  Stay well, the natural way.
-                </h3>
-              </div>
-            </Link>
+            {/* Left: hero slider */}
+            <HeroSlider />
+
 
             {/* Center: dark collective panel */}
             <Link
