@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star } from "lucide-react";
-import { useEffect } from "react";
+import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
 import { toast } from "sonner";
@@ -14,8 +14,14 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { categories, formatINR, products } from "@/data/products";
 import { useShop } from "@/store/shop-store";
 import heroImg from "@/assets/hero-farm.jpg";
-import promoMonsoonImg from "@/assets/promo-monsoon-lifestyle.jpg";
+import heroSlide1 from "@/assets/hero-slide-1.png.asset.json";
+import heroSlide2 from "@/assets/hero-slide-2.png.asset.json";
 import promoRightImg from "@/assets/promo-right-combined.jpg";
+
+const heroSlides = [
+  { src: heroSlide1.url, alt: "Members-only 18% off on A2 ghee from the hills" },
+  { src: heroSlide2.url, alt: "10% off on orders above ₹3000 — use code TATVAN10" },
+];
 
 export const Route = createFileRoute("/")({
   component: HomePage,
