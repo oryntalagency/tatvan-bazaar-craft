@@ -417,3 +417,67 @@ function HomePage() {
     </SiteLayout>
   );
 }
+
+function HeroSlider() {
+  const [index, setIndex] = useState(0);
+  const count = heroSlides.length;
+
+  useEffect(() => {
+    const id = setInterval(() => setIndex((i) => (i + 1) % count), 5000);
+    return () => clearInterval(id);
+  }, [count]);
+
+  const go = (dir: number) => setIndex((i) => (i + dir + count) % count);
+
+  return (
+    <div className="group relative overflow-hidden rounded-2xl shadow-card md:row-span-2">
+      <Link to="/shop" className="block h-full w-full">
+        <div
+          className="flex h-full w-full transition-transform duration-700 ease-out"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {heroSlides.map((s) => (
+            <img
+              key={s.src}
+              src={s.src}
+              alt={s.alt}
+              className="h-full w-full shrink-0 object-cover"
+              loading="lazy"
+            />
+          ))}
+        </div>
+      </Link>
+
+      <button
+        type="button"
+        aria-label="Previous slide"
+        onClick={() => go(-1)}
+        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-1.5 text-primary opacity-0 shadow-soft transition-opacity hover:bg-background group-hover:opacity-100"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      <button
+        type="button"
+        aria-label="Next slide"
+        onClick={() => go(1)}
+        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-background/80 p-1.5 text-primary opacity-0 shadow-soft transition-opacity hover:bg-background group-hover:opacity-100"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+
+      <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+        {heroSlides.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setIndex(i)}
+            className={`h-1.5 rounded-full transition-all ${
+              i === index ? "w-6 bg-primary-foreground" : "w-1.5 bg-primary-foreground/60"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
