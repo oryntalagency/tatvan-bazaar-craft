@@ -126,3 +126,7 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+@utility safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}

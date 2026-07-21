@@ -1,12 +1,17 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Heart, Minus, Plus, ShoppingBag, Star, Truck, ShieldCheck, Leaf } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+import { useState, useEffect, useRef } from "react";
 import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
-import { formatINR, getProductBySlug, products } from "@/data/products";
-import { useShop } from "@/store/shop-store";
-import { cn } from "@/lib/utils";
+import { ProductGallery } from "@/components/site/product/ProductGallery";
+import { ProductInfo } from "@/components/site/product/ProductInfo";
+import { StickyCartBar } from "@/components/site/product/StickyCartBar";
+import {
+  ProductDescription,
+  ProductComparison,
+  ProductFAQ,
+  ProductReviews,
+} from "@/components/site/product/ProductSections";
+import { getProductBySlug, products, type ProductVariant } from "@/data/products";
 
 export const Route = createFileRoute("/product/$slug")({
   loader: ({ params }) => {
@@ -30,7 +35,10 @@ export const Route = createFileRoute("/product/$slug")({
     <SiteLayout>
       <div className="container-x py-24 text-center">
         <h1 className="font-display text-4xl text-primary">Product not found</h1>
-        <Link to="/shop" className="mt-6 inline-flex rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground">
+        <Link
+          to="/shop"
+          className="mt-6 inline-flex rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground"
+        >
           Back to shop
         </Link>
       </div>
@@ -40,141 +48,111 @@ export const Route = createFileRoute("/product/$slug")({
 
 function ProductPage() {
   const { product } = Route.useLoaderData();
-  const { addToCart, toggleWishlist, isWishlisted } = useShop();
-  const [weight, setWeight] = useState(product.weightOptions[0]);
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(
+    product.variants[0] ?? {
+      weight: product.weightOptions[0] ?? "default",
+      price: product.price,
+      compareAt: product.compareAt,
+    },
+  );
   const [qty, setQty] = useState(1);
-  const wished = isWishlisted(product.id);
-  const related = products.filter((p) => p.id !== product.id);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const stickyTriggerRef = useRef<HTMLDivElement>(null);
+
+  // Derive images: prefer variant image if present, else use gallery
+  const allImages = selectedVariant.image
+    ? [selectedVariant.image, ...product.gallery.filter((g) => g !== selectedVariant.image)]
+    : product.gallery;
+
+  // Intersection observer for sticky bar trigger
+  useEffect(() => {
+    const el = stickyTriggerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Show sticky bar when the trigger ref is OUT of the viewport (scrolled past)
+        setShowStickyBar(!entry.isIntersecting);
+      },
+      { threshold: 0, rootMargin: "0px 0px -100px 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const related = products.filter((p) => p.id !== product.id).slice(0, 3);
 
   return (
     <SiteLayout>
-      <div className="container-x pt-8">
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Link to="/" className="hover:text-primary">Home</Link>
-          <span>/</span>
-          <Link to="/shop" className="hover:text-primary">Shop</Link>
-          <span>/</span>
-          <Link to="/shop/$category" params={{ category: product.category }} className="capitalize hover:text-primary">
-            {product.category}
-          </Link>
-          <span>/</span>
-          <span className="text-foreground">{product.name}</span>
-        </div>
-      </div>
+      <div className="container-x pt-6 pb-24 md:pb-10">
+        {/* Hero: two-column on desktop, stacked on mobile */}
+        <section className="grid gap-8 pt-4 lg:grid-cols-[1fr_1fr] lg:gap-12 lg:items-start">
+          <ProductGallery images={allImages} alt={product.name} />
 
-      <section className="container-x grid gap-12 py-10 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-2xl border border-border bg-secondary">
-          <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
-        </div>
-
-        <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">{product.category}</p>
-          <h1 className="mt-2 font-display text-4xl text-primary md:text-5xl">{product.name}</h1>
-          <div className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
-            <Star className="h-4 w-4 fill-gold text-gold" />
-            <span className="font-medium text-foreground">{product.rating.toFixed(1)}</span>
-            <span>· {product.reviewCount} reviews</span>
+          {/* Right column (desktop) / below gallery (mobile) */}
+          <div className="flex flex-col">
+            <ProductInfo
+              product={product}
+              selectedVariant={selectedVariant}
+              onSelectVariant={setSelectedVariant}
+              qty={qty}
+              onQtyChange={setQty}
+            />
+            {/* Sticky bar trigger: when this scrolls out of view, sticky bar shows */}
+            <div ref={stickyTriggerRef} className="h-0" />
           </div>
+        </section>
 
-          <div className="mt-6 flex items-baseline gap-3">
-            <span className="font-display text-3xl text-primary">{formatINR(product.price)}</span>
-            {product.compareAt && (
-              <span className="text-lg text-muted-foreground line-through">{formatINR(product.compareAt)}</span>
-            )}
-            <span className="text-xs text-muted-foreground">incl. of all taxes</span>
-          </div>
+        {/* Divider */}
+        <hr className="my-4 border-border md:my-8" />
 
-          <p className="mt-6 text-foreground/80">{product.description}</p>
+        {/* Below-the-fold content sections */}
+        <ProductDescription product={product} />
 
-          <div className="mt-8">
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">Size</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {product.weightOptions.map((w: string) => (
-                <button
-                  key={w}
-                  onClick={() => setWeight(w)}
-                  className={cn(
-                    "rounded-full border px-4 py-2 text-sm font-medium transition-colors",
-                    weight === w
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border text-foreground/80 hover:border-primary",
-                  )}
-                >
-                  {w}
-                </button>
+        {product.comparisonTable && product.comparisonTable.length > 0 && (
+          <ProductComparison title="How we compare" rows={product.comparisonTable} />
+        )}
+
+        {product.nutritionInfo && product.nutritionInfo.length > 0 && (
+          <ProductComparison title="Nutrition information" rows={product.nutritionInfo} />
+        )}
+
+        {product.faqs && product.faqs.length > 0 && <ProductFAQ faqs={product.faqs} />}
+
+        {product.reviews && product.reviews.length > 0 && (
+          <ProductReviews
+            reviews={product.reviews}
+            rating={product.rating}
+            reviewCount={product.reviewCount}
+          />
+        )}
+
+        {/* Related products */}
+        {related.length > 0 && (
+          <section className="py-10 md:py-14">
+            <h2 className="mb-6 font-display text-2xl font-semibold text-foreground md:text-3xl">
+              You may also like
+            </h2>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((p) => (
+                <ProductCard key={p.id} product={p} />
               ))}
             </div>
-          </div>
+          </section>
+        )}
+      </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <div className="inline-flex items-center rounded-full border border-border">
-              <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="p-3" aria-label="Decrease">
-                <Minus className="h-4 w-4" />
-              </button>
-              <span className="w-8 text-center text-sm font-medium">{qty}</span>
-              <button onClick={() => setQty((q) => q + 1)} className="p-3" aria-label="Increase">
-                <Plus className="h-4 w-4" />
-              </button>
-            </div>
-            <button
-              onClick={() => {
-                addToCart(product.id, weight, qty);
-                toast.success(`${product.name} (${weight}) added to cart`);
-              }}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-95"
-            >
-              <ShoppingBag className="h-4 w-4" /> Add to cart
-            </button>
-            <button
-              onClick={() => {
-                toggleWishlist(product.id);
-                toast(wished ? "Removed from wishlist" : "Added to wishlist");
-              }}
-              aria-label="Wishlist"
-              className={cn(
-                "inline-flex h-12 w-12 items-center justify-center rounded-full border transition-colors",
-                wished ? "border-destructive text-destructive" : "border-border hover:border-destructive hover:text-destructive",
-              )}
-            >
-              <Heart className={cn("h-5 w-5", wished && "fill-current")} />
-            </button>
-          </div>
-
-          <ul className="mt-8 grid gap-2">
-            {product.benefits.map((b: string) => (
-              <li key={b} className="flex items-center gap-2 text-sm text-foreground/80">
-                <Leaf className="h-4 w-4 text-primary" /> {b}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-8 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
-            <div className="flex items-center gap-3 text-sm">
-              <Truck className="h-5 w-5 text-primary" />
-              <div>
-                <p className="font-medium">Free shipping</p>
-                <p className="text-xs text-muted-foreground">On orders above ₹999</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 text-sm">
-              <ShieldCheck className="h-5 w-5 text-primary" />
-              <div>
-                <p className="font-medium">Lab tested</p>
-                <p className="text-xs text-muted-foreground">Every batch verified</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="container-x py-16">
-        <h2 className="mb-8 font-display text-3xl text-primary">You may also like</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {related.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
+      {/* Mobile sticky Add-to-Cart bar — hidden on md+ */}
+      <div className="md:hidden">
+        {showStickyBar && (
+          <StickyCartBar
+            product={product}
+            variant={selectedVariant}
+            qty={qty}
+            onQtyChange={setQty}
+          />
+        )}
+      </div>
     </SiteLayout>
   );
 }
