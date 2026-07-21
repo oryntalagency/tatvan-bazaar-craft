@@ -3,6 +3,7 @@ import { Minus, Plus, ShoppingBag, Trash2, ArrowRight } from "lucide-react";
 import { SiteLayout } from "@/components/site/Layout";
 import { formatINR } from "@/data/products";
 import { useShop } from "@/store/shop-store";
+import heroImg from "@/assets/hero-farm.jpg";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({

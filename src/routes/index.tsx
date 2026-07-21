@@ -329,7 +329,7 @@ function HomePage() {
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            {products.map((p) => (
+            {products.slice(0, 4).map((p) => (
               <img key={p.id} src={p.image} alt={p.name} className="aspect-square w-full rounded-xl object-cover" loading="lazy" />
             ))}
           </div>

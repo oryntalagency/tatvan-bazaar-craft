@@ -3,6 +3,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { SiteLayout } from "@/components/site/Layout";
+import heroImg from "@/assets/hero-farm.jpg";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({

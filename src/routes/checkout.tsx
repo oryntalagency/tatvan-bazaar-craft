@@ -8,6 +8,7 @@ import { useShop } from "@/store/shop-store";
 import { useState } from "react";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { useAuth } from "@/hooks/useAuth";
+import heroImg from "@/assets/hero-farm.jpg";
 
 export const Route = createFileRoute("/checkout")({
   component: CheckoutPage,

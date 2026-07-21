@@ -4,6 +4,7 @@ import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { products } from "@/data/products";
 import { useShop } from "@/store/shop-store";
+import heroImg from "@/assets/hero-farm.jpg";
 
 export const Route = createFileRoute("/wishlist")({
   head: () => ({

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { categories, products } from "@/data/products";
+import heroImg from "@/assets/hero-farm.jpg";
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
