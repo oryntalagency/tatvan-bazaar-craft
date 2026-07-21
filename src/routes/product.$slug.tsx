@@ -6,12 +6,15 @@ import { ProductGallery } from "@/components/site/product/ProductGallery";
 import { ProductInfo } from "@/components/site/product/ProductInfo";
 import { StickyCartBar } from "@/components/site/product/StickyCartBar";
 import {
-  ProductDescription,
+  ProductHighlights,
+  ProductExpandableSections,
   ProductComparison,
   ProductFAQ,
   ProductReviews,
+  ProductVideoReviews,
 } from "@/components/site/product/ProductSections";
 import { getProductBySlug, products, type ProductVariant } from "@/data/products";
+import { useShop } from "@/store/shop-store";
 
 export const Route = createFileRoute("/product/$slug")({
   loader: ({ params }) => {
@@ -48,6 +51,7 @@ export const Route = createFileRoute("/product/$slug")({
 
 function ProductPage() {
   const { product } = Route.useLoaderData();
+  const { addToCart } = useShop();
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(
     product.variants[0] ?? {
       weight: product.weightOptions[0] ?? "default",
@@ -106,8 +110,34 @@ function ProductPage() {
         {/* Divider */}
         <hr className="my-4 border-border md:my-8" />
 
-        {/* Below-the-fold content sections */}
-        <ProductDescription product={product} />
+        {/* Product Highlights / USP Row */}
+        {product.highlights && product.highlights.length > 0 && (
+          <>
+            <div className="flex justify-center">
+              <div className="w-full max-w-2xl">
+                <div className="flex items-center justify-center">
+                  <div className="h-px flex-1 bg-border" />
+                  <div className="px-4">
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Why Tatvan</p>
+                  </div>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+              </div>
+            </div>
+            <ProductHighlights highlights={product.highlights} />
+            <hr className="my-4 border-border md:my-6" />
+          </>
+        )}
+
+        {/* Expandable Sections: Description, Ingredients, Usage, Benefits, Storage */}
+        <ProductExpandableSections product={product} />
+
+        {/* Video Reviews — only shown when data exists */}
+        <ProductVideoReviews
+          videoReviews={product.videoReviews ?? []}
+          allProducts={products}
+          onAddToCart={(pid, weight) => addToCart(pid, weight)}
+        />
 
         {product.comparisonTable && product.comparisonTable.length > 0 && (
           <ProductComparison title="How we compare" rows={product.comparisonTable} />
@@ -117,6 +147,7 @@ function ProductPage() {
           <ProductComparison title="Nutrition information" rows={product.nutritionInfo} />
         )}
 
+        {/* FAQ — redesigned with colored band */}
         {product.faqs && product.faqs.length > 0 && <ProductFAQ faqs={product.faqs} />}
 
         {product.reviews && product.reviews.length > 0 && (

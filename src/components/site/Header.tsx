@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, Menu, Search, ShoppingBag, X, ChevronDown, Droplet, Milk, Wheat } from "lucide-react";
+import { Heart, Menu, Search, ShoppingBag, X, ChevronDown, Droplet, Milk, Wheat, Sprout, FlaskConical } from "lucide-react";
 import { useState } from "react";
 import logoUrl from "@/assets/tatvan-logo.png";
 import { categories } from "@/data/products";
@@ -23,6 +23,8 @@ const categoryIcons: Record<string, typeof Droplet> = {
   honey: Droplet,
   ghee: Milk,
   atta: Wheat,
+  rice: Sprout,
+  oils: FlaskConical,
 };
 
 export function Header() {

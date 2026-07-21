@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import { X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -11,19 +11,9 @@ type Props = {
 export function ProductGallery({ images, alt }: Props) {
   const [active, setActive] = useState(0);
   const [lightbox, setLightbox] = useState(false);
-  const [zoom, setZoom] = useState(false);
-  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
   const mainRef = useRef<HTMLDivElement>(null);
 
   const current = images[active] ?? images[0];
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!mainRef.current) return;
-    const rect = mainRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setZoomPos({ x, y });
-  }, []);
 
   const handlePrev = useCallback(() => {
     setActive((i) => (i === 0 ? images.length - 1 : i - 1));
@@ -76,34 +66,14 @@ export function ProductGallery({ images, alt }: Props) {
 
           <div
             ref={mainRef}
-            onMouseEnter={() => setZoom(true)}
-            onMouseLeave={() => setZoom(false)}
-            onMouseMove={handleMouseMove}
             onClick={() => setLightbox(true)}
-            className={cn(
-              "relative flex-1 overflow-hidden rounded-2xl border border-border bg-secondary cursor-zoom-in",
-              zoom && "cursor-zoom-out",
-            )}
+            className="relative flex-1 overflow-hidden rounded-2xl border border-border bg-secondary cursor-pointer"
           >
             <img
               src={current}
               alt={alt}
               className="h-full w-full object-cover transition-opacity duration-300"
-              style={
-                zoom
-                  ? {
-                      transform: `scale(2)`,
-                      transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
-                      transition: "transform 0.1s ease-out",
-                    }
-                  : { transition: "transform 0.3s ease-out" }
-              }
             />
-            {!zoom && (
-              <div className="absolute bottom-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-background/80 text-foreground/60 backdrop-blur-sm">
-                <ZoomIn className="h-4 w-4" />
-              </div>
-            )}
           </div>
         </div>
 

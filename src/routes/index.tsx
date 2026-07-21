@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain, PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play, Star, ChevronLeft, ChevronRight, FlaskConical } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -8,6 +8,8 @@ const categoryIcons: Record<string, typeof Droplet> = {
   honey: Droplet,
   ghee: Milk,
   atta: Wheat,
+  rice: Sprout,
+  oils: FlaskConical,
 };
 import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
@@ -157,7 +159,7 @@ function HomePage() {
             The taste of the earth, kept whole.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-primary-foreground/85">
-            Raw honey, hand-churned ghee and stone-ground atta — sourced from small Indian
+            Raw honey, hand-churned ghee, stone-ground atta, heritage rice and cold-pressed oils — sourced from small Indian
             farms that still honour the old ways.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -204,13 +206,13 @@ function HomePage() {
         <div className="mb-10 flex items-end justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Shop by category</p>
-            <h2 className="mt-2 font-display text-4xl text-primary">Three staples, done right.</h2>
+            <h2 className="mt-2 font-display text-4xl text-primary">Five staples, done right.</h2>
           </div>
           <Link to="/shop" className="hidden text-sm font-medium text-primary hover:underline md:inline">
             View all →
           </Link>
         </div>
-        <div className="grid grid-cols-3 gap-4 sm:gap-8">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-8 lg:grid-cols-5">
           {categories.map((cat) => {
             const Icon = categoryIcons[cat.slug] ?? Leaf;
             return (

@@ -23,7 +23,7 @@ function ShopPage() {
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Shop</p>
           <h1 className="mt-2 font-display text-5xl text-primary">All products</h1>
           <p className="mt-3 max-w-xl text-muted-foreground">
-            A tiny, considered range. Three staples we make exceptionally well.
+            A considered range of organic staples. Raw honey, A2 ghee, stone-ground atta, heritage rice and cold-pressed oils.
           </p>
         </div>
       </section>
