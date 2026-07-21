@@ -1,10 +1,22 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { ProductVideoReviews } from "@/components/site/product/ProductSections";
 import { categories, getCategory, getProductsByCategory, products, type Product, type VideoReview } from "@/data/products";
 import { useShop } from "@/store/shop-store";
-import heroImg from "@/assets/hero-farm.jpg";
+import heroFarm from "@/assets/hero-farm.jpg";
+import heroBeekeeper from "@/assets/story-beekeeper.jpg";
+import heroBilona from "@/assets/story-bilona-ghee.jpg";
+import heroWheat from "@/assets/story-wheat-hands.jpg";
+import heroFarmer from "@/assets/story-farmer-family.jpg";
+import heroMill from "@/assets/story-stone-mill.jpg";
+
+const categoryHeroImages: Record<string, string> = {
+  honey: heroBeekeeper,
+  ghee: heroBilona,
+  atta: heroWheat,
+  rice: heroFarmer,
+  oils: heroMill,
+};
 
 export const Route = createFileRoute("/shop/$category")({
   loader: ({ params }) => {
@@ -36,10 +48,10 @@ function CategoryPage() {
     .flatMap((p) => p.videoReviews ?? []);
 
   return (
-    <SiteLayout>
+    <>
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImg} alt="" className="h-full w-full object-cover" />
+          <img src={categoryHeroImages[category.slug] ?? heroFarm} alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-primary/75" />
         </div>
         <div className="container-x relative py-20 text-primary-foreground">
@@ -92,20 +104,18 @@ function CategoryPage() {
           />
         </section>
       )}
-    </SiteLayout>
+    </>
   );
 }
 
 function CategoryNotFound() {
   return (
-    <SiteLayout>
-      <div className="container-x py-24 text-center">
-        <h1 className="font-display text-4xl text-primary">Category not found</h1>
-        <p className="mt-3 text-muted-foreground">The category you're looking for doesn't exist.</p>
-        <Link to="/shop" className="mt-6 inline-flex rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground">
-          Back to shop
-        </Link>
-      </div>
-    </SiteLayout>
+    <div className="container-x py-24 text-center">
+      <h1 className="font-display text-4xl text-primary">Category not found</h1>
+      <p className="mt-3 text-muted-foreground">The category you're looking for doesn't exist.</p>
+      <Link to="/shop" className="mt-6 inline-flex rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground">
+        Back to shop
+      </Link>
+    </div>
   );
 }
