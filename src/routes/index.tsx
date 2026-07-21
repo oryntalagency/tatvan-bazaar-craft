@@ -245,9 +245,11 @@ function HomePage() {
             Shop More
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
+        <div className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
           {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+            <div key={p.id} className="w-[360px] snap-start shrink-0">
+              <ProductCard product={p} />
+            </div>
           ))}
         </div>
       </section>

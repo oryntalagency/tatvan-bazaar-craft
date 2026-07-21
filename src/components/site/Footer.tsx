@@ -155,7 +155,7 @@ export function Footer() {
             Mumbai, Maharashtra, 400050
           </p>
           <p className="mt-3">
-            Email: <a href="mailto:hello@tatvan.in" className="underline underline-offset-4 hover:opacity-70">hello@tatvan.in</a>
+            Email: <a href="mailto:puretatvan@gmail.com" className="underline underline-offset-4 hover:opacity-70">puretatvan@gmail.com</a>
           </p>
           <p className="mt-2">Tel: +91 98765 43210</p>
           <p className="mt-2">Grievances: +91 98765 43211</p>

@@ -49,7 +49,7 @@ function ContactPage() {
       <section className="container-x grid gap-10 py-16 lg:grid-cols-[1fr_1.4fr]">
         <div className="space-y-6">
           {[
-            { icon: Mail, title: "Email", value: "hello@tatvan.in" },
+            { icon: Mail, title: "Email", value: "puretatvan@gmail.com" },
             { icon: Phone, title: "Phone", value: "+91 98765 43210" },
             { icon: MapPin, title: "Address", value: "Tatvan Farms, Uttarakhand, India" },
           ].map(({ icon: Icon, title, value }) => (
