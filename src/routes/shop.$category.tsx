@@ -54,7 +54,7 @@ function CategoryPage() {
           <img src={categoryHeroImages[category.slug] ?? heroFarm} alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-primary/75" />
         </div>
-        <div className="container-x relative py-20 text-primary-foreground">
+        <div className="container-x relative py-28 text-primary-foreground">
           <div className="mb-3 flex items-center gap-2 text-xs text-primary-foreground/70">
             <Link to="/" className="hover:text-primary-foreground">Home</Link>
             <span>/</span>

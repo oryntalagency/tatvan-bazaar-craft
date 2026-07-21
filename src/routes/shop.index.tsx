@@ -22,7 +22,7 @@ function ShopIndexPage() {
           <img src={heroImg} alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-primary/75" />
         </div>
-        <div className="container-x relative py-24 text-primary-foreground">
+        <div className="container-x relative py-[34] text-primary-foreground">
           <p className="text-xs uppercase tracking-[0.35em] text-primary-foreground/80">Shop</p>
           <h1 className="mt-3 max-w-3xl font-display text-5xl md:text-6xl">All products</h1>
           <p className="mt-6 max-w-2xl text-lg text-primary-foreground/85">

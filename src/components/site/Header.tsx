@@ -277,21 +277,6 @@ export function Header() {
               {/* Divider */}
               <div className="my-5 h-px bg-[color:var(--forest-deep)]/10" />
 
-              {/* COLLECTIVE MEMBERSHIP */}
-              <Link
-                to="/shop"
-                onClick={() => setOpen(false)}
-                className="flex h-12 items-center gap-3 rounded-lg px-1 transition-colors hover:bg-[color:var(--forest-deep)]/5"
-              >
-                <span className="inline-flex items-center rounded-md bg-[color:var(--forest-deep)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[color:var(--cream)]">
-                  Collective
-                </span>
-                <span className="text-sm font-semibold uppercase tracking-wide">Membership</span>
-              </Link>
-
-              {/* Divider */}
-              <div className="my-5 h-px bg-[color:var(--forest-deep)]/10" />
-
               {/* Expandable: SHOP BY CONCERN */}
               <MobileDrawerExpandable title="Shop by Concern" icon={<Leaf className="h-4 w-4" />}>
                 {[
