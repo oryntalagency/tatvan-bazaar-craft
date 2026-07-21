@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import {
   Heart, Menu, Search, ShoppingBag, X, ChevronDown, Plus, Minus, Boxes,
-  Droplet, Milk, Wheat, Sprout, FlaskConical, Leaf, MapPin, Percent,
+  Droplet, Milk, Wheat, Sprout, FlaskConical, Leaf, MapPin,
 } from "lucide-react";
 import { useState } from "react";
 import logoUrl from "@/assets/tatvan-logo.png";
@@ -196,13 +196,13 @@ export function Header() {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[9998] bg-black/40 backdrop-blur-sm lg:hidden"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
 
           {/* Drawer panel */}
-          <div className="fixed inset-y-0 left-0 z-50 flex w-[min(85vw,360px)] flex-col bg-[color:var(--cream)] text-[color:var(--forest-deep)] shadow-2xl transition-transform duration-300 ease-in-out lg:hidden">
+          <div className="fixed inset-y-0 left-0 z-[9999] flex w-[min(85vw,360px)] flex-col bg-[color:var(--cream)] text-[color:var(--forest-deep)] shadow-2xl transition-transform duration-300 ease-in-out lg:hidden">
             {/* Drawer header */}
             <div className="flex items-center justify-between border-b border-[color:var(--forest-deep)]/10 px-5 py-4">
               <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-2">
@@ -289,7 +289,6 @@ export function Header() {
                   { label: "Daily Essentials", to: "/shop/ghee" },
                   { label: "Heart Healthy", to: "/shop/oils" },
                   { label: "Weight Management", to: "/shop/atta" },
-                  { label: "Kids & Family", to: "/shop" },
                 ].map((link) => (
                   <Link
                     key={link.label}
@@ -312,25 +311,6 @@ export function Header() {
                     className="flex h-11 items-center rounded-lg px-3 text-sm text-[color:var(--forest-deep)]/80 transition-colors hover:bg-[color:var(--forest-deep)]/5 hover:text-[color:var(--forest-deep)]"
                   >
                     {s.label}
-                  </Link>
-                ))}
-              </MobileDrawerExpandable>
-
-              {/* Expandable: SAVER COMBOS */}
-              <MobileDrawerExpandable title="Saver Combos" icon={<Percent className="h-4 w-4" />}>
-                {[
-                  { label: "Honey + Ghee Combo", to: "/shop" },
-                  { label: "Weekly Essentials Pack", to: "/shop" },
-                  { label: "Family favourites Bundle", to: "/shop" },
-                  { label: "Gift Box Collections", to: "/shop" },
-                ].map((link) => (
-                  <Link
-                    key={link.label}
-                    to={link.to}
-                    onClick={() => setOpen(false)}
-                    className="flex h-11 items-center rounded-lg px-3 text-sm text-[color:var(--forest-deep)]/80 transition-colors hover:bg-[color:var(--forest-deep)]/5 hover:text-[color:var(--forest-deep)]"
-                  >
-                    {link.label}
                   </Link>
                 ))}
               </MobileDrawerExpandable>

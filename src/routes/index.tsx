@@ -1,14 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  ArrowRight, Leaf, Sprout, ShieldCheck, Truck, Gift, CloudRain,
-  PackageOpen, Boxes, BadgeIndianRupee, Droplet, Milk, Wheat, Play,
-  Star, ChevronLeft, ChevronRight, FlaskConical, Sparkles, Tag,
+  ArrowRight, Leaf, Sprout, ShieldCheck, Truck,
+  Droplet, Milk, Wheat, Play,
+  ChevronLeft, ChevronRight, FlaskConical, Sparkles,
+  ShoppingBag,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { categories, formatINR, products } from "@/data/products";
+import { useShop } from "@/store/shop-store";
+import { toast } from "sonner";
 import heroSlide1 from "@/assets/story-beekeeper.jpg";
 import heroSlide2 from "@/assets/story-bilona-ghee.jpg";
 import promoRightImg from "@/assets/promo-right-combined.jpg";
@@ -19,13 +22,57 @@ import promoMonsoonImg from "@/assets/promo-monsoon-lifestyle.jpg";
 /* ------------------------------------------------------------------ */
 
 const categoryShortcuts = [
-  { icon: Gift,          label: "Membership Deals", to: "/shop",                bg: "bg-[hsl(25_55%_20%)]",  iconColor: "text-[hsl(45_70%_75%)]" },
-  { icon: CloudRain,     label: "Monsoon Special",  to: "/shop/ghee",           bg: "bg-[hsl(150_35%_28%)]", iconColor: "text-[hsl(45_70%_75%)]" },
-  { icon: Sparkles,      label: "New Launches",     to: "/shop/honey",          bg: "bg-[hsl(85_30%_32%)]",  iconColor: "text-[hsl(45_70%_75%)]" },
-  { icon: Boxes,         label: "All Products",     to: "/shop",                bg: "bg-[hsl(150_40%_18%)]", iconColor: "text-[hsl(45_70%_75%)]" },
-  { icon: BadgeIndianRupee, label: "Under ₹999",   to: "/shop",                bg: "bg-[hsl(25_50%_25%)]",  iconColor: "text-[hsl(45_70%_75%)]" },
-  { icon: Tag,           label: "Best Sellers",     to: "/shop/atta",           bg: "bg-[hsl(45_40%_28%)]",  iconColor: "text-[hsl(45_70%_75%)]" },
+  { icon: Droplet,        label: "Honey",       to: "/shop/honey",          bg: "bg-[hsl(45_55%_50%)]",  iconColor: "text-white" },
+  { icon: Milk,           label: "Ghee",        to: "/shop/ghee",           bg: "bg-[hsl(25_55%_35%)]",  iconColor: "text-[hsl(45_70%_80%)]" },
+  { icon: Wheat,          label: "Atta",        to: "/shop/atta",           bg: "bg-[hsl(85_35%_38%)]",  iconColor: "text-white" },
+  { icon: Sprout,         label: "Rice",        to: "/shop/rice",           bg: "bg-[hsl(150_35%_32%)]", iconColor: "text-white" },
+  { icon: FlaskConical,   label: "Oils",        to: "/shop/oils",           bg: "bg-[hsl(15_50%_38%)]",  iconColor: "text-[hsl(45_70%_80%)]" },
 ];
+
+/* ------------------------------------------------------------------ */
+/*  SPOTLIGHT REVIEWS — data array                                    */
+/* ------------------------------------------------------------------ */
+
+const spotlightReviews = [
+  {
+    name: "NITHIN KAMATH",
+    role: "Founder, Rainmatter",
+    initials: "NK",
+    quote: "At Tatvan, we care deeply about what we eat. Their farms stood out — clean food, deep purpose, and a clear mission to support farmer livelihoods. We're customers first.",
+    bg: "bg-[hsl(28_85%_88%)]",
+    avatarBg: "bg-[hsl(28_85%_72%)] text-white",
+  },
+  {
+    name: "ANAND S AHUJA",
+    role: "Founder, Bhaane",
+    initials: "AA",
+    quote: "Pure love, pure taste, pure intention. Every product from Tatvan feels authentic and full of heart — from how it's grown to how it tastes. It inspires mindful eating.",
+    bg: "bg-[hsl(150_35%_88%)]",
+    avatarBg: "bg-[hsl(150_35%_45%)] text-white",
+  },
+  {
+    name: "MIRA KAPOOR",
+    role: "Actor & Advocate",
+    initials: "MK",
+    quote: "One of the few brands that makes ghee the traditional way — from dahi, not malai. That alone won me over. Delicious, wholesome, and always a repeat buy.",
+    bg: "bg-[hsl(45_55%_88%)]",
+    avatarBg: "bg-[hsl(45_55%_50%)] text-white",
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/*  ALL VIDEO REVIEWS — aggregated from all products                  */
+/* ------------------------------------------------------------------ */
+
+const allVideoReviews = products.flatMap((p) =>
+  (p.videoReviews ?? []).map((vr) => ({
+    ...vr,
+    productImage: p.image,
+    productName: p.name,
+    price: p.price,
+    productId: p.id,
+  })),
+);
 
 /* ------------------------------------------------------------------ */
 /*  BANNER CAROUSEL — slides data array                               */
@@ -148,6 +195,7 @@ function useSwipe(
 /* ================================================================== */
 
 function HomePage() {
+  const { addToCart } = useShop();
   return (
     <SiteLayout>
       {/* ---- CATEGORY SHORTCUTS ---- */}
@@ -198,45 +246,6 @@ function HomePage() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* ---- SHOP BY CATEGORY ---- */}
-      <section className="container-x py-20">
-        <div className="mb-10 flex items-end justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Shop by category</p>
-            <h2 className="mt-2 font-display text-4xl text-primary">Five staples, done right.</h2>
-          </div>
-          <Link to="/shop" className="hidden text-sm font-medium text-primary hover:underline md:inline">
-            View all →
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-8 lg:grid-cols-5">
-          {categories.map((cat) => {
-            const Icon =
-              cat.slug === "honey" ? Droplet :
-              cat.slug === "ghee"  ? Milk :
-              cat.slug === "atta"  ? Wheat :
-              cat.slug === "rice"  ? Sprout :
-              FlaskConical;
-            return (
-              <Link
-                key={cat.slug}
-                to="/shop/$category"
-                params={{ category: cat.slug }}
-                className="group flex flex-col items-center gap-4 rounded-2xl p-6 text-center transition-colors hover:bg-secondary/60"
-              >
-                <div className="flex h-28 w-28 items-center justify-center rounded-full border border-primary/15 bg-background text-primary transition-transform group-hover:scale-105 sm:h-36 sm:w-36">
-                  <Icon className="h-14 w-14 sm:h-16 sm:w-16" strokeWidth={1.4} />
-                </div>
-                <div>
-                  <h3 className="font-display text-xl text-primary sm:text-2xl">{cat.name}</h3>
-                  <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{cat.tagline}</p>
-                </div>
-              </Link>
-            );
-          })}
         </div>
       </section>
 
@@ -345,9 +354,10 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ---- PRESS + REVIEWS ---- */}
-      <section className="bg-[hsl(30_50%_96%)]">
+      {/* ---- SPOTLIGHT REVIEWS ---- */}
+      <section className="bg-[hsl(60_45%_90%)]">
         <div className="container-x py-16 sm:py-20">
+          {/* Press logos bar */}
           <div className="rounded-2xl bg-[hsl(30_15%_92%)] px-6 py-6 sm:py-8">
             <div className="grid grid-cols-2 items-center justify-items-center gap-6 sm:grid-cols-3 md:grid-cols-5">
               {[
@@ -364,54 +374,91 @@ function HomePage() {
             </div>
           </div>
 
-          <div className="mt-14 grid gap-10 md:grid-cols-3">
-            {[
-              {
-                name: "NITHIN KAMATH",
-                role: "Founder, Rainmatter",
-                initials: "NK",
-                quote:
-                  "At Tatvan, we care deeply about what we eat. Their farms stood out — clean food, deep purpose, and a clear mission to support farmer livelihoods. We're customers first.",
-              },
-              {
-                name: "ANAND S AHUJA",
-                role: "Founder, Bhaane",
-                initials: "AA",
-                quote:
-                  "Pure love, pure taste, pure intention. Every product from Tatvan feels authentic and full of heart — from how it's grown to how it tastes. It inspires mindful eating.",
-              },
-              {
-                name: "MIRA KAPOOR",
-                role: "India",
-                initials: "MK",
-                quote:
-                  "One of the few brands that makes ghee the traditional way — from dahi, not malai. That alone won me over. Delicious, wholesome, and always a repeat buy.",
-              },
-            ].map((r) => (
-              <figure key={r.name} className="relative">
-                <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-1">
-                  <div className="min-w-0">
-                    <div className="mb-2 flex gap-0.5 text-gold">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-current" strokeWidth={0} />
-                      ))}
+          {/* Spotlight review cards */}
+          <div className="mt-14">
+            <div className="mb-8 text-center">
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">In their words</p>
+              <h2 className="mt-2 font-display text-3xl text-foreground sm:text-4xl">Spotlight</h2>
+            </div>
+            <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-3 sm:overflow-visible">
+              {spotlightReviews.map((r) => (
+                <div
+                  key={r.name}
+                  className={`w-[85%] shrink-0 snap-center rounded-2xl p-6 sm:w-auto ${r.bg}`}
+                >
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-full ${r.avatarBg} text-sm font-bold`}>
+                      {r.initials}
                     </div>
-                    <p className="truncate text-sm font-bold tracking-wide text-primary">{r.name}</p>
-                    <p className="truncate text-xs text-muted-foreground">{r.role}</p>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-bold text-foreground">{r.name}</p>
+                      <p className="truncate text-xs text-muted-foreground">{r.role}</p>
+                    </div>
+                    <Sparkles className="ml-auto h-5 w-5 text-gold" />
                   </div>
-                  <div
-                    aria-hidden
-                    className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-secondary text-primary shadow-soft ring-4 ring-[hsl(30_50%_96%)]"
-                  >
-                    <span className="font-display text-lg font-bold">{r.initials}</span>
+                  <blockquote className="text-sm leading-relaxed text-foreground/85">
+                    &ldquo;{r.quote}&rdquo;
+                  </blockquote>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---- VIDEO REVIEWS FROM COMMUNITY ---- */}
+      <section className="container-x pb-20">
+        <div className="mb-8 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">From our community</p>
+          <h2 className="mt-2 font-display text-3xl text-foreground sm:text-4xl">See It In Action</h2>
+          <p className="mt-2 max-w-lg mx-auto text-sm text-muted-foreground">Real videos from real customers showing how Tatvan products look, cook, and taste.</p>
+        </div>
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
+          {allVideoReviews.map((vr) => (
+            <div
+              key={vr.id}
+              className="w-[220px] shrink-0 snap-start rounded-2xl border border-border bg-card shadow-card overflow-hidden sm:w-auto"
+            >
+              <div className="relative aspect-[9/16] overflow-hidden bg-secondary">
+                <img
+                  src={vr.thumbnailUrl}
+                  alt={vr.title}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-background/85 text-primary shadow-soft transition-transform hover:scale-110">
+                    <Play className="h-6 w-6 fill-current ml-0.5" />
                   </div>
                 </div>
-                <blockquote className="-mt-6 rounded-2xl bg-[hsl(28_85%_72%)] p-6 pt-10 text-primary-foreground shadow-card">
-                  <p className="text-sm font-semibold leading-relaxed">{r.quote}</p>
-                </blockquote>
-              </figure>
-            ))}
-          </div>
+                <p className="absolute bottom-3 left-3 right-3 text-xs font-semibold leading-tight text-primary-foreground">
+                  {vr.title}
+                </p>
+              </div>
+              <div className="flex items-center gap-3 p-3">
+                <img
+                  src={vr.productImage}
+                  alt={vr.productName}
+                  className="h-10 w-10 rounded-md object-cover"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-xs font-bold text-foreground">{vr.productName}</p>
+                  <p className="text-xs text-muted-foreground">{formatINR(vr.price)}</p>
+                </div>
+                <button
+                  onClick={() => {
+                    addToCart(vr.productId);
+                    toast.success(`${vr.productName} added to cart`);
+                  }}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105"
+                  aria-label={`Add ${vr.productName} to cart`}
+                >
+                  <ShoppingBag className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </SiteLayout>
