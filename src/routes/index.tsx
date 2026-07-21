@@ -408,11 +408,6 @@ function HomePage() {
 
       {/* ---- VIDEO REVIEWS FROM COMMUNITY ---- */}
       <section className="container-x pb-20">
-        <div className="mb-8 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">From our community</p>
-          <h2 className="mt-2 font-display text-3xl text-foreground sm:text-4xl">See It In Action</h2>
-          <p className="mt-2 max-w-lg mx-auto text-sm text-muted-foreground">Real videos from real customers showing how Tatvan products look, cook, and taste.</p>
-        </div>
         <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
           {allVideoReviews.map((vr) => (
             <div
