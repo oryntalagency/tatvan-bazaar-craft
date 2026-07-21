@@ -351,18 +351,23 @@ function HomePage() {
       <section className="bg-[hsl(60_45%_90%)]">
         <div className="container-x py-16 sm:py-20">
           {/* Press logos bar */}
-          <div className="rounded-2xl bg-[hsl(30_15%_92%)] px-6 py-6 sm:py-8">
-            <div className="grid grid-cols-2 items-center justify-items-center gap-6 sm:grid-cols-3 md:grid-cols-5">
+          <div className="overflow-hidden rounded-2xl bg-[hsl(30_15%_92%)] px-6 py-6 sm:py-8">
+            <div className="animate-marquee flex w-max items-center gap-16 whitespace-nowrap">
               {[
                 { name: "GQ", cls: "font-display text-3xl font-black tracking-tighter" },
                 { name: "Hindustan Times", cls: "font-display text-lg font-semibold italic" },
                 { name: "KRISHI JAGRAN", cls: "font-display text-base font-black tracking-tight" },
                 { name: "myGov", cls: "font-display text-xl font-black lowercase tracking-tight" },
                 { name: "THE HINDU", cls: "font-display text-lg font-semibold tracking-widest" },
-              ].map((p) => (
-                <div key={p.name} className={`text-foreground/80 ${p.cls}`}>
+                { name: "GQ", cls: "font-display text-3xl font-black tracking-tighter" },
+                { name: "Hindustan Times", cls: "font-display text-lg font-semibold italic" },
+                { name: "KRISHI JAGRAN", cls: "font-display text-base font-black tracking-tight" },
+                { name: "myGov", cls: "font-display text-xl font-black lowercase tracking-tight" },
+                { name: "THE HINDU", cls: "font-display text-lg font-semibold tracking-widest" },
+              ].map((p, i) => (
+                <span key={i} className={`text-foreground/80 ${p.cls}`}>
                   {p.name}
-                </div>
+                </span>
               ))}
             </div>
           </div>
