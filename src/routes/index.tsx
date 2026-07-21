@@ -245,20 +245,10 @@ function HomePage() {
             Shop More
           </Link>
         </div>
-        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:overflow-visible">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
           {products.map((p) => (
-            <div key={p.id} className="w-[85%] shrink-0 snap-center sm:w-auto">
-              <ProductCard product={p} />
-            </div>
+            <ProductCard key={p.id} product={p} />
           ))}
-        </div>
-        <div className="mt-4 text-center sm:hidden">
-          <Link
-            to="/shop"
-            className="inline-flex rounded-md bg-[hsl(25_55%_20%)] px-4 py-2 text-xs font-semibold text-[hsl(45_70%_75%)] transition-colors hover:bg-[hsl(25_55%_25%)]"
-          >
-            Shop More
-          </Link>
         </div>
       </section>
 

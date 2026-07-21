@@ -164,7 +164,7 @@ function ProductPage() {
             <h2 className="mb-6 font-display text-2xl font-semibold text-foreground md:text-3xl">
               You may also like
             </h2>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
               {related.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
