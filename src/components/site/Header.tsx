@@ -1,5 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, Menu, Search, ShoppingBag, X, ChevronDown, Droplet, Milk, Wheat, Sprout, FlaskConical } from "lucide-react";
+import {
+  Heart, Menu, Search, ShoppingBag, X, ChevronDown, Plus, Minus, Boxes,
+  Droplet, Milk, Wheat, Sprout, FlaskConical, Leaf, MapPin, Percent,
+} from "lucide-react";
 import { useState } from "react";
 import logoUrl from "@/assets/tatvan-logo.png";
 import { categories } from "@/data/products";
@@ -188,56 +191,195 @@ export function Header() {
         </div>
       )}
 
+      {/* ---- MOBILE DRAWER ---- */}
       {open && (
-        <div className="border-t border-border bg-background lg:hidden">
-          <div className="container-x flex flex-col py-4">
-            {nav.map((n) => (
-              <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="py-2 text-sm font-medium">
-                {n.label}
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Drawer panel */}
+          <div className="fixed inset-y-0 left-0 z-50 flex w-[min(85vw,360px)] flex-col bg-[color:var(--cream)] text-[color:var(--forest-deep)] shadow-2xl transition-transform duration-300 ease-in-out lg:hidden">
+            {/* Drawer header */}
+            <div className="flex items-center justify-between border-b border-[color:var(--forest-deep)]/10 px-5 py-4">
+              <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-2">
+                <img src={logoUrl} alt="Tatvan" className="h-9 w-9 object-contain" />
+                <span className="font-display text-lg tracking-wide">Tatvan</span>
               </Link>
-            ))}
-            <div className="mt-2 border-t border-border pt-3">
-              <p className="pb-2 text-xs uppercase tracking-wider text-muted-foreground">Our Story</p>
-              <ul className="divide-y divide-border rounded-xl border border-border">
-                {storyLinks.map((s) => (
-                  <li key={s.to}>
-                    <Link to={s.to} onClick={() => setOpen(false)} className="flex flex-col p-3">
-                      <span className="text-sm font-semibold text-primary">{s.label}</span>
-                      <span className="text-[11px] text-muted-foreground">{s.tagline}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <button
+                onClick={() => setOpen(false)}
+                className="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-[color:var(--forest-deep)]/10"
+                aria-label="Close menu"
+              >
+                <X className="h-6 w-6" />
+              </button>
             </div>
-            <div className="mt-2 border-t border-border pt-3">
-              <p className="pb-2 text-xs uppercase tracking-wider text-muted-foreground">Shop by Category</p>
-              <ul className="divide-y divide-border rounded-xl border border-border">
+
+            {/* Scrollable content */}
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-8 pt-5">
+              {/* Category shortcut grid — 3 columns */}
+              <div className="grid grid-cols-3 gap-4">
                 {categories.map((c) => {
                   const Icon = categoryIcons[c.slug] ?? Droplet;
                   return (
-                    <li key={c.slug}>
-                      <Link
-                        to="/shop/$category"
-                        params={{ category: c.slug }}
-                        onClick={() => setOpen(false)}
-                        className="flex items-center gap-3 p-3"
-                      >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-primary">
-                          <Icon className="h-5 w-5" strokeWidth={1.6} />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-semibold text-primary">{c.name}</span>
-                          <span className="text-[11px] text-muted-foreground">{c.tagline}</span>
-                        </div>
-                      </Link>
-                    </li>
+                    <Link
+                      key={c.slug}
+                      to="/shop/$category"
+                      params={{ category: c.slug }}
+                      onClick={() => setOpen(false)}
+                      className="flex flex-col items-center gap-2 py-2 text-center"
+                    >
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[color:var(--forest-deep)]/20 bg-white text-[color:var(--forest-deep)] transition-transform hover:scale-105">
+                        <Icon className="h-6 w-6" strokeWidth={1.5} />
+                      </div>
+                      <span className="text-xs font-semibold leading-tight">{c.name}</span>
+                    </Link>
                   );
                 })}
-              </ul>
+                {/* Extra tile: All Products */}
+                <Link
+                  to="/shop"
+                  onClick={() => setOpen(false)}
+                  className="flex flex-col items-center gap-2 py-2 text-center"
+                >
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[color:var(--forest-deep)]/20 bg-white text-[color:var(--forest-deep)] transition-transform hover:scale-105">
+                    <Boxes className="h-6 w-6" strokeWidth={1.5} />
+                  </div>
+                  <span className="text-xs font-semibold leading-tight">All</span>
+                </Link>
+              </div>
+
+              {/* Divider */}
+              <div className="my-5 h-px bg-[color:var(--forest-deep)]/10" />
+
+              {/* SHOP ALL */}
+              <Link
+                to="/shop"
+                onClick={() => setOpen(false)}
+                className="flex h-12 items-center justify-center rounded-lg border border-[color:var(--forest-deep)]/15 bg-white text-sm font-bold uppercase tracking-wider text-[color:var(--forest-deep)] transition-colors hover:bg-[color:var(--forest-deep)]/5"
+              >
+                Shop All
+              </Link>
+
+              {/* Divider */}
+              <div className="my-5 h-px bg-[color:var(--forest-deep)]/10" />
+
+              {/* COLLECTIVE MEMBERSHIP */}
+              <Link
+                to="/shop"
+                onClick={() => setOpen(false)}
+                className="flex h-12 items-center gap-3 rounded-lg px-1 transition-colors hover:bg-[color:var(--forest-deep)]/5"
+              >
+                <span className="inline-flex items-center rounded-md bg-[color:var(--forest-deep)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[color:var(--cream)]">
+                  Collective
+                </span>
+                <span className="text-sm font-semibold uppercase tracking-wide">Membership</span>
+              </Link>
+
+              {/* Divider */}
+              <div className="my-5 h-px bg-[color:var(--forest-deep)]/10" />
+
+              {/* Expandable: SHOP BY CONCERN */}
+              <MobileDrawerExpandable title="Shop by Concern" icon={<Leaf className="h-4 w-4" />}>
+                {[
+                  { label: "Immunity Boosters", to: "/shop/honey" },
+                  { label: "Daily Essentials", to: "/shop/ghee" },
+                  { label: "Heart Healthy", to: "/shop/oils" },
+                  { label: "Weight Management", to: "/shop/atta" },
+                  { label: "Kids & Family", to: "/shop" },
+                ].map((link) => (
+                  <Link
+                    key={link.label}
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                    className="flex h-11 items-center rounded-lg px-3 text-sm text-[color:var(--forest-deep)]/80 transition-colors hover:bg-[color:var(--forest-deep)]/5 hover:text-[color:var(--forest-deep)]"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </MobileDrawerExpandable>
+
+              {/* Expandable: FARM VISIT */}
+              <MobileDrawerExpandable title="Farm Visit" icon={<MapPin className="h-4 w-4" />}>
+                {storyLinks.map((s) => (
+                  <Link
+                    key={s.to}
+                    to={s.to}
+                    onClick={() => setOpen(false)}
+                    className="flex h-11 items-center rounded-lg px-3 text-sm text-[color:var(--forest-deep)]/80 transition-colors hover:bg-[color:var(--forest-deep)]/5 hover:text-[color:var(--forest-deep)]"
+                  >
+                    {s.label}
+                  </Link>
+                ))}
+              </MobileDrawerExpandable>
+
+              {/* Expandable: SAVER COMBOS */}
+              <MobileDrawerExpandable title="Saver Combos" icon={<Percent className="h-4 w-4" />}>
+                {[
+                  { label: "Honey + Ghee Combo", to: "/shop" },
+                  { label: "Weekly Essentials Pack", to: "/shop" },
+                  { label: "Family favourites Bundle", to: "/shop" },
+                  { label: "Gift Box Collections", to: "/shop" },
+                ].map((link) => (
+                  <Link
+                    key={link.label}
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                    className="flex h-11 items-center rounded-lg px-3 text-sm text-[color:var(--forest-deep)]/80 transition-colors hover:bg-[color:var(--forest-deep)]/5 hover:text-[color:var(--forest-deep)]"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </MobileDrawerExpandable>
             </div>
           </div>
-        </div>
+        </>
       )}
     </header>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Mobile drawer expandable row                                      */
+/* ------------------------------------------------------------------ */
+
+function MobileDrawerExpandable({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div className="mb-1">
+      <button
+        onClick={() => setExpanded((v) => !v)}
+        className="flex h-12 w-full items-center justify-between rounded-lg px-1 text-left transition-colors hover:bg-[color:var(--forest-deep)]/5"
+        aria-expanded={expanded}
+      >
+        <span className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[color:var(--forest-deep)]">
+          {icon}
+          {title}
+        </span>
+        {expanded ? (
+          <Minus className="h-4 w-4 text-[color:var(--forest-deep)]/60" />
+        ) : (
+          <Plus className="h-4 w-4 text-[color:var(--forest-deep)]/60" />
+        )}
+      </button>
+      {expanded && (
+        <div className="ml-1 mt-1 flex flex-col gap-0.5 pb-2 pl-2">
+          {children}
+        </div>
+      )}
+      <div className="h-px bg-[color:var(--forest-deep)]/10" />
+    </div>
   );
 }

@@ -9,7 +9,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { categories, formatINR, products } from "@/data/products";
-import heroImg from "@/assets/hero-farm.jpg";
 import heroSlide1 from "@/assets/story-beekeeper.jpg";
 import heroSlide2 from "@/assets/story-bilona-ghee.jpg";
 import promoRightImg from "@/assets/promo-right-combined.jpg";
@@ -177,37 +176,6 @@ function HomePage() {
       <section className="bg-secondary/30">
         <div className="container-x pb-10 pt-2">
           <BannerCarousel />
-        </div>
-      </section>
-
-      {/* ---- HERO (tagline) ---- */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={heroImg} alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/60 to-primary/20" />
-        </div>
-        <div className="container-x relative flex min-h-[560px] flex-col justify-center py-24 text-primary-foreground">
-          <h1 className="max-w-2xl font-display text-5xl leading-[1.05] md:text-6xl lg:text-7xl">
-            The taste of the earth, kept whole.
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-primary-foreground/85">
-            Raw honey, hand-churned ghee, stone-ground atta, heritage rice and cold-pressed oils — sourced from small Indian
-            farms that still honour the old ways.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/shop"
-              className="inline-flex items-center gap-2 rounded-full bg-primary-foreground px-6 py-3 text-sm font-semibold text-primary transition-transform hover:scale-[1.02]"
-            >
-              Shop the collection <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/about"
-              className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/50 px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary-foreground/10"
-            >
-              Our story
-            </Link>
-          </div>
         </div>
       </section>
 
