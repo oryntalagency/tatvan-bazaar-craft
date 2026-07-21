@@ -247,7 +247,7 @@ function HomePage() {
         </div>
         <div className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
           {products.map((p) => (
-            <div key={p.id} className="w-[360px] snap-start shrink-0">
+            <div key={p.id} className="w-[250px] sm:w-[360px] snap-start shrink-0">
               <ProductCard product={p} />
             </div>
           ))}
@@ -325,6 +325,25 @@ function HomePage() {
               <img key={p.id} src={p.image} alt={p.name} className="aspect-square w-full rounded-xl object-cover" loading="lazy" />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ---- BRAND MARQUEE ---- */}
+      <section className="border-y border-border bg-secondary/30 py-6 overflow-hidden">
+        <div className="animate-marquee flex w-max gap-12 whitespace-nowrap">
+          {[
+            "TATVAN", "ORGANIC", "FARM FRESH", "A2 GIR GHEE", "WILD FOREST HONEY",
+            "STONE-GROUND ATTA", "HERITAGE RICE", "COLD-PRESSED OILS",
+            "TATVAN", "ORGANIC", "FARM FRESH", "A2 GIR GHEE", "WILD FOREST HONEY",
+            "STONE-GROUND ATTA", "HERITAGE RICE", "COLD-PRESSED OILS",
+          ].map((name, i) => (
+            <span
+              key={i}
+              className="text-sm font-semibold uppercase tracking-[0.2em] text-foreground/40"
+            >
+              {name}
+            </span>
+          ))}
         </div>
       </section>
 
