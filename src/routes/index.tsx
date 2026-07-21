@@ -16,13 +16,13 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { categories, formatINR, products } from "@/data/products";
 import { useShop } from "@/store/shop-store";
 import heroImg from "@/assets/hero-farm.jpg";
-import heroSlide1 from "@/assets/hero-slide-1.png.asset.json";
-import heroSlide2 from "@/assets/hero-slide-2.png.asset.json";
+import heroSlide1 from "@/assets/story-beekeeper.jpg";
+import heroSlide2 from "@/assets/story-bilona-ghee.jpg";
 import promoRightImg from "@/assets/promo-right-combined.jpg";
 
 const heroSlides = [
-  { src: heroSlide1.url, alt: "Members-only 18% off on A2 ghee from the hills" },
-  { src: heroSlide2.url, alt: "10% off on orders above ₹3000 — use code TATVAN10" },
+  { src: heroSlide1, alt: "Meet our beekeepers in the Himalayan foothills" },
+  { src: heroSlide2, alt: "Traditional bilona ghee — slow-cooked to perfection" },
 ];
 
 export const Route = createFileRoute("/")({

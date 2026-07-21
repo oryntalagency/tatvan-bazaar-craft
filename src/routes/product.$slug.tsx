@@ -110,6 +110,13 @@ function ProductPage() {
         {/* Divider */}
         <hr className="my-4 border-border md:my-8" />
 
+        {/* Video Reviews — directly below product images */}
+        <ProductVideoReviews
+          videoReviews={product.videoReviews ?? []}
+          allProducts={products}
+          onAddToCart={(pid, weight) => addToCart(pid, weight)}
+        />
+
         {/* Product Highlights / USP Row */}
         {product.highlights && product.highlights.length > 0 && (
           <>
@@ -131,13 +138,6 @@ function ProductPage() {
 
         {/* Expandable Sections: Description, Ingredients, Usage, Benefits, Storage */}
         <ProductExpandableSections product={product} />
-
-        {/* Video Reviews — only shown when data exists */}
-        <ProductVideoReviews
-          videoReviews={product.videoReviews ?? []}
-          allProducts={products}
-          onAddToCart={(pid, weight) => addToCart(pid, weight)}
-        />
 
         {product.comparisonTable && product.comparisonTable.length > 0 && (
           <ProductComparison title="How we compare" rows={product.comparisonTable} />

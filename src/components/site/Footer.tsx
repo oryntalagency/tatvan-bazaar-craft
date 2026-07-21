@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Instagram, Facebook, Youtube, Linkedin, ChevronDown, ArrowRight, Leaf } from "lucide-react";
-import logoAsset from "@/assets/tatvan-logo.png.asset.json";
+import logoImg from "@/assets/tatvan-logo.png";
 import { categories } from "@/data/products";
 
 type ColumnKey = "categories" | "general" | "connect";
@@ -49,7 +49,7 @@ export function Footer() {
       <div className="container-x relative grid gap-12 py-16 md:grid-cols-[1fr_1.4fr_1fr]">
         {/* Logo column */}
         <div className="flex flex-col items-start">
-          <img src={logoAsset.url} alt="Tatvan" className="h-24 w-24" />
+          <img src={logoImg} alt="Tatvan" className="h-24 w-24" />
           <span className="mt-3 font-display text-3xl tracking-wide">Tatvan</span>
           <span className="mt-1 text-xs uppercase tracking-[0.25em] text-[color:var(--forest-deep)]/70">Organic Farms</span>
         </div>

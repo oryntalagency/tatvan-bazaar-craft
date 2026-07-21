@@ -307,6 +307,11 @@ export const products: Product[] = [
       { icon: "ShieldCheck", label: "Lab Tested" },
       { icon: "Award", label: "Raw & Pure" },
     ],
+    videoReviews: [
+      { id: "vr8", videoUrl: "", thumbnailUrl: honeyImg, productId: "p-honey-02", title: "The bold pour — mustard honey in action" },
+      { id: "vr9", videoUrl: "", thumbnailUrl: storyBeekeeper, productId: "p-honey-02", title: "Harvesting from wild mustard fields" },
+      { id: "vr10", videoUrl: "", thumbnailUrl: storyFarmer, productId: "p-honey-02", title: "Taste test — savoury & sweet" },
+    ],
     weightOptions: ["250g", "500g"],
     variants: [
       { weight: "250g", price: 599, compareAt: 699 },
@@ -352,6 +357,10 @@ export const products: Product[] = [
       { icon: "ShieldCheck", label: "Lab Certified" },
       { icon: "Sparkles", label: "Limited Batch" },
     ],
+    videoReviews: [
+      { id: "vr11", videoUrl: "", thumbnailUrl: honeyImg, productId: "p-honey-03", title: "The rare sidr harvest — thick & luxurious" },
+      { id: "vr12", videoUrl: "", thumbnailUrl: storyBeekeeper, productId: "p-honey-03", title: "Wild sidr forests of Uttarakhand" },
+    ],
     weightOptions: ["250g", "500g"],
     variants: [
       { weight: "250g", price: 1299, compareAt: 1599 },
@@ -394,6 +403,11 @@ export const products: Product[] = [
       { icon: "Leaf", label: "Hand Churned" },
       { icon: "Flame", label: "Wood-Fire" },
       { icon: "ShieldCheck", label: "Lab Verified" },
+    ],
+    videoReviews: [
+      { id: "vr13", videoUrl: "", thumbnailUrl: gheeImg, productId: "p-ghee-02", title: "Golden ghee flowing — the traditional way" },
+      { id: "vr14", videoUrl: "", thumbnailUrl: storyBilona, productId: "p-ghee-02", title: "From churn to kitchen — Kumaon hills" },
+      { id: "vr15", videoUrl: "", thumbnailUrl: storyFarmer, productId: "p-ghee-02", title: "A family's daily ghee ritual" },
     ],
     weightOptions: ["250ml", "500ml", "1L"],
     variants: [
@@ -445,6 +459,10 @@ export const products: Product[] = [
       { icon: "Leaf", label: "Single Polished" },
       { icon: "Heart", label: "Iron Rich" },
       { icon: "ShieldCheck", label: "Lab Tested" },
+    ],
+    videoReviews: [
+      { id: "vr16", videoUrl: "", thumbnailUrl: attaImg, productId: "p-rice-01", title: "The deep red grains of Kerala Matta" },
+      { id: "vr17", videoUrl: "", thumbnailUrl: storyFarmer, productId: "p-rice-01", title: "Palakkad rice farmers share their story" },
     ],
     weightOptions: ["1kg", "5kg", "10kg"],
     variants: [
@@ -500,6 +518,10 @@ export const products: Product[] = [
       { icon: "Award", label: "Extra Long" },
       { icon: "ShieldCheck", label: "Lab Tested" },
     ],
+    videoReviews: [
+      { id: "vr18", videoUrl: "", thumbnailUrl: attaImg, productId: "p-rice-02", title: "Extra-long basmati grains after cooking" },
+      { id: "vr19", videoUrl: "", thumbnailUrl: storyFarmer, productId: "p-rice-02", title: "From the Himalayan foothills to your plate" },
+    ],
     weightOptions: ["1kg", "5kg", "10kg"],
     variants: [
       { weight: "1kg", price: 449, compareAt: 549 },
@@ -550,6 +572,11 @@ export const products: Product[] = [
       { icon: "Leaf", label: "Cold Extracted" },
       { icon: "Heart", label: "Omega-3 Rich" },
       { icon: "ShieldCheck", label: "Lab Tested" },
+    ],
+    videoReviews: [
+      { id: "vr20", videoUrl: "", thumbnailUrl: gheeImg, productId: "p-oils-01", title: "Kacchi ghani — the wood press in action" },
+      { id: "vr21", videoUrl: "", thumbnailUrl: storyFarmer, productId: "p-oils-01", title: "From mustard seeds to golden oil" },
+      { id: "vr22", videoUrl: "", thumbnailUrl: storyWoman, productId: "p-oils-01", title: "Making traditional achaar with our oil" },
     ],
     weightOptions: ["500ml", "1L", "2L"],
     variants: [
@@ -603,6 +630,10 @@ export const products: Product[] = [
       { icon: "Heart", label: "Antioxidant Rich" },
       { icon: "ShieldCheck", label: "Lab Tested" },
     ],
+    videoReviews: [
+      { id: "vr23", videoUrl: "", thumbnailUrl: gheeImg, productId: "p-oils-02", title: "Deep amber sesame oil — cold pressed" },
+      { id: "vr24", videoUrl: "", thumbnailUrl: storyFarmer, productId: "p-oils-02", title: "South Indian tadka with fresh sesame oil" },
+    ],
     weightOptions: ["500ml", "1L"],
     variants: [
       { weight: "500ml", price: 449, compareAt: 549 },
@@ -651,6 +682,11 @@ export const products: Product[] = [
       { icon: "Leaf", label: "Unrefined" },
       { icon: "Flame", label: "High Smoke Point" },
       { icon: "ShieldCheck", label: "Lab Tested" },
+    ],
+    videoReviews: [
+      { id: "vr25", videoUrl: "", thumbnailUrl: gheeImg, productId: "p-oils-03", title: "Light golden groundnut oil pour" },
+      { id: "vr26", videoUrl: "", thumbnailUrl: storyFarmer, productId: "p-oils-03", title: "Perfect pakoras with wood-pressed oil" },
+      { id: "vr27", videoUrl: "", thumbnailUrl: storyWoman, productId: "p-oils-03", title: "Everyday cooking with pure groundnut oil" },
     ],
     weightOptions: ["500ml", "1L", "2L"],
     variants: [
@@ -702,6 +738,10 @@ export const products: Product[] = [
       { icon: "Heart", label: "High Fiber" },
       { icon: "Cog", label: "Stone Milled" },
       { icon: "ShieldCheck", label: "Lab Tested" },
+    ],
+    videoReviews: [
+      { id: "vr28", videoUrl: "", thumbnailUrl: attaImg, productId: "p-atta-02", title: "7 grains, one perfect blend" },
+      { id: "vr29", videoUrl: "", thumbnailUrl: storyWheat, productId: "p-atta-02", title: "Soft multigrain rotis — step by step" },
     ],
     weightOptions: ["1kg", "5kg"],
     variants: [
