@@ -466,7 +466,7 @@ function BannerCarousel() {
       {...swipe}
     >
       {/* ---- Slides ---- */}
-      <div className="relative aspect-[16/7] w-full sm:aspect-[16/6] md:aspect-[16/5]">
+      <div className="relative aspect-[16/9] w-full sm:aspect-[16/8] md:aspect-[16/7]">
         {bannerSlides.map((s, i) => (
           <div
             key={s.id}
