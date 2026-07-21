@@ -3,7 +3,8 @@ import {
   Heart, Menu, Search, ShoppingBag, X, ChevronDown, Plus, Minus, Boxes,
   Droplet, Milk, Wheat, Sprout, FlaskConical, Leaf, MapPin,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import logoUrl from "@/assets/tatvan-logo.png";
 import { categories } from "@/data/products";
 import { useShop } from "@/store/shop-store";
@@ -36,6 +37,15 @@ export function Header() {
   const [catOpen, setCatOpen] = useState(false);
   const [storyOpen, setStoryOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
@@ -191,20 +201,20 @@ export function Header() {
         </div>
       )}
 
-      {/* ---- MOBILE DRAWER ---- */}
-      {open && (
+      {/* ---- MOBILE DRAWER (portal to body to escape header stacking context) ---- */}
+      {open && createPortal(
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-[9998] bg-black/40 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[9998] bg-black/40 backdrop-blur-sm"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
 
           {/* Drawer panel */}
-          <div className="fixed inset-y-0 left-0 z-[9999] flex w-[min(85vw,360px)] flex-col bg-[color:var(--cream)] text-[color:var(--forest-deep)] shadow-2xl transition-transform duration-300 ease-in-out lg:hidden">
+          <div className="fixed inset-y-0 left-0 z-[9999] flex w-[min(85vw,360px)] flex-col bg-[color:var(--cream)] text-[color:var(--forest-deep)] shadow-2xl">
             {/* Drawer header */}
-            <div className="flex items-center justify-between border-b border-[color:var(--forest-deep)]/10 px-5 py-4">
+            <div className="flex shrink-0 items-center justify-between border-b border-[color:var(--forest-deep)]/10 px-5 py-4">
               <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-2">
                 <img src={logoUrl} alt="Tatvan" className="h-9 w-9 object-contain" />
                 <span className="font-display text-lg tracking-wide">Tatvan</span>
@@ -219,7 +229,7 @@ export function Header() {
             </div>
 
             {/* Scrollable content */}
-            <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-8 pt-5">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-8 pt-6">
               {/* Category shortcut grid — 3 columns */}
               <div className="grid grid-cols-3 gap-4">
                 {categories.map((c) => {
@@ -316,7 +326,8 @@ export function Header() {
               </MobileDrawerExpandable>
             </div>
           </div>
-        </>
+        </>,
+        document.body,
       )}
     </header>
   );

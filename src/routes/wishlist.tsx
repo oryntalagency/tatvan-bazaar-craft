@@ -23,10 +23,14 @@ function WishlistPage() {
 
   return (
     <SiteLayout>
-      <section className="border-b border-border bg-secondary/40">
-        <div className="container-x py-12">
-          <h1 className="font-display text-5xl text-primary">Your Wishlist</h1>
-          <p className="mt-2 text-muted-foreground">{items.length} saved item(s)</p>
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroImg} alt="" className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-primary/75" />
+        </div>
+        <div className="container-x relative py-20 text-primary-foreground">
+          <h1 className="max-w-3xl font-display text-5xl md:text-6xl">Your Wishlist</h1>
+          <p className="mt-3 text-lg text-primary-foreground/85">{items.length} saved item(s)</p>
         </div>
       </section>
 

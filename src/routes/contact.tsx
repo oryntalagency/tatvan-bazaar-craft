@@ -32,11 +32,15 @@ function ContactPage() {
 
   return (
     <SiteLayout>
-      <section className="border-b border-border bg-secondary/40">
-        <div className="container-x py-14">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Contact</p>
-          <h1 className="mt-2 font-display text-5xl text-primary">We'd love to hear from you.</h1>
-          <p className="mt-3 max-w-xl text-muted-foreground">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroImg} alt="" className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-primary/75" />
+        </div>
+        <div className="container-x relative py-24 text-primary-foreground">
+          <p className="text-xs uppercase tracking-[0.35em] text-primary-foreground/80">Contact</p>
+          <h1 className="mt-3 max-w-3xl font-display text-5xl md:text-6xl">We'd love to hear from you.</h1>
+          <p className="mt-6 max-w-2xl text-lg text-primary-foreground/85">
             Whether it's a question about an order, wholesale enquiry or just a hello — write to us.
           </p>
         </div>

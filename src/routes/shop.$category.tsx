@@ -1,7 +1,10 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
-import { categories, getCategory, getProductsByCategory, type Product } from "@/data/products";
+import { ProductVideoReviews } from "@/components/site/product/ProductSections";
+import { categories, getCategory, getProductsByCategory, products, type Product, type VideoReview } from "@/data/products";
+import { useShop } from "@/store/shop-store";
+import heroImg from "@/assets/hero-farm.jpg";
 
 export const Route = createFileRoute("/shop/$category")({
   loader: ({ params }) => {
@@ -24,20 +27,31 @@ export const Route = createFileRoute("/shop/$category")({
 });
 
 function CategoryPage() {
-  const { category, products } = Route.useLoaderData();
+  const { category, products: categoryProducts } = Route.useLoaderData();
+  const { addToCart } = useShop();
+
+  const categoryProductIds = new Set(categoryProducts.map((p) => p.id));
+  const categoryVideoReviews: VideoReview[] = products
+    .filter((p) => categoryProductIds.has(p.id))
+    .flatMap((p) => p.videoReviews ?? []);
+
   return (
     <SiteLayout>
-      <section className="border-b border-border bg-secondary/40">
-        <div className="container-x py-14">
-          <div className="mb-3 flex items-center gap-2 text-xs text-muted-foreground">
-            <Link to="/" className="hover:text-primary">Home</Link>
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroImg} alt="" className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-primary/75" />
+        </div>
+        <div className="container-x relative py-20 text-primary-foreground">
+          <div className="mb-3 flex items-center gap-2 text-xs text-primary-foreground/70">
+            <Link to="/" className="hover:text-primary-foreground">Home</Link>
             <span>/</span>
-            <Link to="/shop" className="hover:text-primary">Shop</Link>
+            <Link to="/shop" className="hover:text-primary-foreground">Shop</Link>
             <span>/</span>
-            <span className="text-foreground">{category.name}</span>
+            <span className="text-primary-foreground">{category.name}</span>
           </div>
-          <h1 className="font-display text-5xl text-primary">{category.name}</h1>
-          <p className="mt-3 max-w-xl text-muted-foreground">{category.tagline}</p>
+          <h1 className="mt-3 max-w-3xl font-display text-5xl md:text-6xl">{category.name}</h1>
+          <p className="mt-6 max-w-2xl text-lg text-primary-foreground/85">{category.tagline}</p>
         </div>
       </section>
 
@@ -63,11 +77,21 @@ function CategoryPage() {
         </div>
 
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {products.map((p: Product) => (
+          {categoryProducts.map((p: Product) => (
             <ProductCard key={p.id} product={p} />
           ))}
         </div>
       </section>
+
+      {categoryVideoReviews.length > 0 && (
+        <section className="container-x pb-20">
+          <ProductVideoReviews
+            videoReviews={categoryVideoReviews}
+            allProducts={products}
+            onAddToCart={(pid, weight) => addToCart(pid, weight)}
+          />
+        </section>
+      )}
     </SiteLayout>
   );
 }

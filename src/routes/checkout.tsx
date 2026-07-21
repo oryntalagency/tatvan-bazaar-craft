@@ -114,16 +114,19 @@ await openRazorpayCheckout({
   return (
     <ProtectedRoute>
       <SiteLayout>
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0">
+            <img src={heroImg} alt="" className="h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-primary/75" />
+          </div>
+          <div className="container-x relative py-20 text-primary-foreground">
+            <h1 className="max-w-3xl font-display text-5xl md:text-6xl">Checkout</h1>
+            <p className="mt-3 max-w-2xl text-lg text-primary-foreground/85">Complete your shipping information.</p>
+          </div>
+        </section>
+
         <section className="container-x py-16">
-          <h1 className="font-display text-4xl text-primary">
-            Checkout
-          </h1>
-
-          <p className="mt-2 text-muted-foreground">
-            Complete your shipping information.
-          </p>
-
-          <div className="mt-10 grid gap-8 lg:grid-cols-[1.6fr_1fr]">
+          <div className="grid gap-8 lg:grid-cols-[1.6fr_1fr]">
             <div className="rounded-xl border border-border p-6">
               <h2 className="font-semibold text-xl">
                 Shipping Information
