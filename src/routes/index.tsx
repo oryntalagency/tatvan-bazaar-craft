@@ -3,15 +3,12 @@ import {
   ArrowRight, Leaf, Sprout, ShieldCheck, Truck,
   Droplet, Milk, Wheat, Play,
   ChevronLeft, ChevronRight, FlaskConical, Sparkles,
-  ShoppingBag,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { SiteLayout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
 import { categories, formatINR, products } from "@/data/products";
-import { useShop } from "@/store/shop-store";
-import { toast } from "sonner";
 import heroSlide1 from "@/assets/story-beekeeper.jpg";
 import heroSlide2 from "@/assets/story-bilona-ghee.jpg";
 import promoRightImg from "@/assets/promo-right-combined.jpg";
@@ -59,20 +56,6 @@ const spotlightReviews = [
     avatarBg: "bg-[hsl(45_55%_50%)] text-white",
   },
 ];
-
-/* ------------------------------------------------------------------ */
-/*  ALL VIDEO REVIEWS — aggregated from all products                  */
-/* ------------------------------------------------------------------ */
-
-const allVideoReviews = products.flatMap((p) =>
-  (p.videoReviews ?? []).map((vr) => ({
-    ...vr,
-    productImage: p.image,
-    productName: p.name,
-    price: p.price,
-    productId: p.id,
-  })),
-);
 
 /* ------------------------------------------------------------------ */
 /*  BANNER CAROUSEL — slides data array                               */
@@ -195,7 +178,6 @@ function useSwipe(
 /* ================================================================== */
 
 function HomePage() {
-  const { addToCart } = useShop();
   return (
     <SiteLayout>
       {/* ---- CATEGORY SHORTCUTS ---- */}
@@ -403,57 +385,6 @@ function HomePage() {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ---- VIDEO REVIEWS FROM COMMUNITY ---- */}
-      <section className="container-x pb-20">
-        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
-          {allVideoReviews.map((vr) => (
-            <div
-              key={vr.id}
-              className="w-[220px] shrink-0 snap-start rounded-2xl border border-border bg-card shadow-card overflow-hidden sm:w-auto"
-            >
-              <div className="relative aspect-[9/16] overflow-hidden bg-secondary">
-                <img
-                  src={vr.thumbnailUrl}
-                  alt={vr.title}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-background/85 text-primary shadow-soft transition-transform hover:scale-110">
-                    <Play className="h-6 w-6 fill-current ml-0.5" />
-                  </div>
-                </div>
-                <p className="absolute bottom-3 left-3 right-3 text-xs font-semibold leading-tight text-primary-foreground">
-                  {vr.title}
-                </p>
-              </div>
-              <div className="flex items-center gap-3 p-3">
-                <img
-                  src={vr.productImage}
-                  alt={vr.productName}
-                  className="h-10 w-10 rounded-md object-cover"
-                />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs font-bold text-foreground">{vr.productName}</p>
-                  <p className="text-xs text-muted-foreground">{formatINR(vr.price)}</p>
-                </div>
-                <button
-                  onClick={() => {
-                    addToCart(vr.productId);
-                    toast.success(`${vr.productName} added to cart`);
-                  }}
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105"
-                  aria-label={`Add ${vr.productName} to cart`}
-                >
-                  <ShoppingBag className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
     </SiteLayout>
