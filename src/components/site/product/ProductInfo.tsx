@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
   Heart,
   Minus,
@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   Leaf,
   Award,
+  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatINR, getCategory, type Product, type ProductVariant } from "@/data/products";
@@ -37,9 +38,15 @@ export function ProductInfo({
   qty,
   onQtyChange,
 }: Props) {
-  const { addToCart, toggleWishlist, isWishlisted } = useShop();
+  const navigate = useNavigate();
+  const { addToCart, toggleWishlist, isWishlisted, setBuyNowItem } = useShop();
   const wished = isWishlisted(product.id);
   const category = getCategory(product.category);
+
+  const handleBuyNow = () => {
+    setBuyNowItem({ productId: product.id, weight: selectedVariant.weight, quantity: qty });
+    navigate({ to: "/checkout" });
+  };
 
   const currentPrice = selectedVariant.price;
   const currentCompareAt = selectedVariant.compareAt;
@@ -202,6 +209,14 @@ export function ProductInfo({
           <Heart className={cn("h-5 w-5", wished && "fill-current")} />
         </button>
       </div>
+
+      {/* Buy Now */}
+      <button
+        onClick={handleBuyNow}
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-primary px-6 py-3.5 text-sm font-semibold text-primary transition-all hover:bg-primary/10 active:scale-[0.98] min-h-[48px]"
+      >
+        <Zap className="h-4 w-4" /> Buy Now
+      </button>
 
       {/* Trust badges */}
       <div className="grid grid-cols-2 gap-3 pt-2 sm:grid-cols-4 lg:grid-cols-4">

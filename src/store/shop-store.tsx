@@ -6,12 +6,15 @@ export type CartItem = { productId: string; quantity: number; weight: string };
 type ShopState = {
   cart: CartItem[];
   wishlist: string[];
+  buyNowItem: CartItem | null;
   addToCart: (productId: string, weight?: string, quantity?: number) => void;
   updateQuantity: (productId: string, weight: string, quantity: number) => void;
   removeFromCart: (productId: string, weight: string) => void;
   clearCart: () => void;
   toggleWishlist: (productId: string) => void;
   isWishlisted: (productId: string) => boolean;
+  setBuyNowItem: (item: CartItem | null) => void;
+  clearBuyNow: () => void;
   cartCount: number;
   wishlistCount: number;
   subtotal: number;
@@ -21,18 +24,22 @@ type ShopState = {
 const ShopContext = createContext<ShopState | null>(null);
 const CART_KEY = "tatvan.cart";
 const WISH_KEY = "tatvan.wishlist";
+const BUY_NOW_KEY = "tatvan.buyNow";
 
 export function ShopProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
+  const [buyNowItem, setBuyNowItem] = useState<CartItem | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
       const c = localStorage.getItem(CART_KEY);
       const w = localStorage.getItem(WISH_KEY);
+      const b = localStorage.getItem(BUY_NOW_KEY);
       if (c) setCart(JSON.parse(c));
       if (w) setWishlist(JSON.parse(w));
+      if (b) setBuyNowItem(JSON.parse(b));
     } catch {}
     setHydrated(true);
   }, []);
@@ -43,6 +50,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (hydrated) localStorage.setItem(WISH_KEY, JSON.stringify(wishlist));
   }, [wishlist, hydrated]);
+  useEffect(() => {
+    if (hydrated) localStorage.setItem(BUY_NOW_KEY, JSON.stringify(buyNowItem));
+  }, [buyNowItem, hydrated]);
 
   const value: ShopState = useMemo(() => {
     const cartWithProducts = cart
@@ -52,6 +62,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     return {
       cart,
       wishlist,
+      buyNowItem,
       cartWithProducts,
       subtotal,
       cartCount: cart.reduce((s, i) => s + i.quantity, 0),
@@ -78,11 +89,13 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       removeFromCart: (productId, weight) =>
         setCart((prev) => prev.filter((i) => !(i.productId === productId && i.weight === weight))),
       clearCart: () => setCart([]),
+      setBuyNowItem,
+      clearBuyNow: () => setBuyNowItem(null),
       toggleWishlist: (productId) =>
         setWishlist((prev) => (prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId])),
       isWishlisted: (productId) => wishlist.includes(productId),
     };
-  }, [cart, wishlist]);
+  }, [cart, wishlist, buyNowItem]);
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 }

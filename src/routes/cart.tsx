@@ -17,7 +17,7 @@ export const Route = createFileRoute("/cart")({
 });
 
 function CartPage() {
-  const { cartWithProducts, subtotal, updateQuantity, removeFromCart } = useShop();
+  const { cartWithProducts, subtotal, updateQuantity, removeFromCart, clearBuyNow } = useShop();
   const shipping = subtotal > 0 && subtotal < 999 ? 79 : 0;
   const total = subtotal + shipping;
 
@@ -106,6 +106,7 @@ function CartPage() {
             </dl>
           <Link
   to="/checkout"
+  onClick={() => clearBuyNow()}
   className="mt-6 block w-full rounded-full bg-primary py-3 text-center text-sm font-semibold text-primary-foreground hover:opacity-95"
 >
   Proceed to checkout

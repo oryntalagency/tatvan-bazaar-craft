@@ -5,7 +5,9 @@ import { openRazorpayCheckout } from "@/lib/razorpay";
 
 import { useShop } from "@/store/shop-store";
 
-import { useState } from "react";
+import { products } from "@/data/products";
+
+import { useState, useMemo } from "react";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { useAuth } from "@/hooks/useAuth";
 import heroImg from "@/assets/hero-farm.jpg";
@@ -16,8 +18,16 @@ export const Route = createFileRoute("/checkout")({
 
 function CheckoutPage() {
 
-const { cartWithProducts } = useShop();
+const { cartWithProducts, buyNowItem, clearBuyNow } = useShop();
 const { user } = useAuth();
+
+const checkoutItems = useMemo(() => {
+  if (buyNowItem) {
+    const product = products.find((p) => p.id === buyNowItem.productId);
+    if (product) return [{ ...buyNowItem, product }];
+  }
+  return cartWithProducts;
+}, [buyNowItem, cartWithProducts]);
 
 const [loading, setLoading] = useState(false);
 
@@ -53,7 +63,7 @@ const handlePayment = async () => {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    products: cartWithProducts.map((item) => ({
+    products: checkoutItems.map((item) => ({
       productId: item.productId,
       slug: item.product.slug,
       sku: "",
@@ -95,6 +105,7 @@ await openRazorpayCheckout({
   }),
 });;
 
+      clearBuyNow();
       window.location.href = "/order-success";
     } finally {
       setLoading(false);
@@ -226,7 +237,7 @@ await openRazorpayCheckout({
               </h2>
 
             <div className="space-y-3">
-    {cartWithProducts.map((item) => (
+    {checkoutItems.map((item) => (
       <div
         key={item.productId + item.weight}
         className="flex justify-between"
@@ -241,6 +252,11 @@ await openRazorpayCheckout({
       </div>
     ))}
   </div>
+             {buyNowItem && (
+              <p className="mt-2 text-xs text-muted-foreground">
+                Buying this item only — your cart is unchanged.
+              </p>
+            )}
              <button
     onClick={handlePayment}
     disabled={loading}

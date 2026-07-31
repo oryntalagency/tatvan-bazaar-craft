@@ -1,4 +1,5 @@
-import { Minus, Plus, ShoppingBag } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Zap } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { formatINR, type Product, type ProductVariant } from "@/data/products";
 import { useShop } from "@/store/shop-store";
@@ -11,7 +12,8 @@ type Props = {
 };
 
 export function StickyCartBar({ product, variant, qty, onQtyChange }: Props) {
-  const { addToCart } = useShop();
+  const navigate = useNavigate();
+  const { addToCart, setBuyNowItem } = useShop();
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 backdrop-blur-sm safe-area-bottom">
@@ -49,6 +51,16 @@ export function StickyCartBar({ product, variant, qty, onQtyChange }: Props) {
           className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground active:scale-[0.98]"
         >
           <ShoppingBag className="h-4 w-4" /> Add
+        </button>
+
+        <button
+          onClick={() => {
+            setBuyNowItem({ productId: product.id, weight: variant.weight, quantity: qty });
+            navigate({ to: "/checkout" });
+          }}
+          className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full border border-primary px-5 text-sm font-semibold text-primary active:scale-[0.98]"
+        >
+          <Zap className="h-4 w-4" /> Buy
         </button>
       </div>
     </div>

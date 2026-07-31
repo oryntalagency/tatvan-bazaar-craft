@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { Heart, Star, ChevronDown, ShoppingCart } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Heart, Star, ChevronDown, ShoppingCart, Zap } from "lucide-react";
 import { formatINR, type Product } from "@/data/products";
 import { useShop } from "@/store/shop-store";
 import { toast } from "sonner";
@@ -15,7 +15,8 @@ const badgeColors: Record<string, string> = {
 };
 
 export function ProductCard({ product }: { product: Product }) {
-  const { addToCart, toggleWishlist, isWishlisted } = useShop();
+  const navigate = useNavigate();
+  const { addToCart, toggleWishlist, isWishlisted, setBuyNowItem } = useShop();
   const wished = isWishlisted(product.id);
 
   const defaultVariant =
@@ -26,6 +27,11 @@ export function ProductCard({ product }: { product: Product }) {
   const handleAdd = () => {
     addToCart(product.id, selected.weight);
     toast.success(`${product.name} (${selected.weight}) added to cart`);
+  };
+
+  const handleBuyNow = () => {
+    setBuyNowItem({ productId: product.id, weight: selected.weight, quantity: 1 });
+    navigate({ to: "/checkout" });
   };
 
   return (
@@ -146,6 +152,15 @@ export function ProductCard({ product }: { product: Product }) {
         >
           <ShoppingCart className="h-4 w-4" />
           Add to Cart
+        </button>
+
+        {/* Row 6: Full-width BUY NOW */}
+        <button
+          onClick={handleBuyNow}
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-[hsl(150_40%_30%)] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[hsl(150_40%_30%)] transition-colors hover:bg-[hsl(150_40%_30%)]/10"
+        >
+          <Zap className="h-4 w-4" />
+          Buy Now
         </button>
       </div>
     </div>
